@@ -1,0 +1,100 @@
+
+> muneerul-islam@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/api/announcements/route.ts
+18:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+37:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/auth/register/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/[id]/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+33:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+42:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/members/route.ts
+27:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+48:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/route.ts
+24:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+43:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/events/route.ts
+18:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+42:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/[id]/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+43:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+52:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/route.ts
+37:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mahallu/route.ts
+18:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+31:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/[id]/route.ts
+17:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+35:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+44:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/route.ts
+41:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+70:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/announcements/page.tsx
+28:60  Warning: React Hook useEffect has a missing dependency: 'fetchAnnouncements'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/committees/page.tsx
+3:16  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+32:57  Warning: React Hook useEffect has a missing dependency: 'fetchCommittees'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/events/page.tsx
+3:53  Warning: 'Trash2' is defined but never used.  @typescript-eslint/no-unused-vars
+28:53  Warning: React Hook useEffect has a missing dependency: 'fetchEvents'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/families/[id]/page.tsx
+7:3  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+7:62  Warning: 'Edit' is defined but never used.  @typescript-eslint/no-unused-vars
+30:38  Warning: React Hook useEffect has a missing dependency: 'fetchFamily'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+98:44  Warning: 'idx' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/families/page.tsx
+59:55  Warning: React Hook useEffect has a missing dependency: 'fetchFamilies'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/members/page.tsx
+3:49  Warning: 'Droplets' is defined but never used.  @typescript-eslint/no-unused-vars
+3:59  Warning: 'GraduationCap' is defined but never used.  @typescript-eslint/no-unused-vars
+3:74  Warning: 'Briefcase' is defined but never used.  @typescript-eslint/no-unused-vars
+32:39  Warning: React Hook useEffect has a missing dependency: 'fetchMembers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/page.tsx
+5:46  Warning: 'Vote' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/reports/page.tsx
+3:21  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/settings/page.tsx
+3:10  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'mahallu' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+Failed to compile.
+
+src/app/api/auth/[...nextauth]/route.ts
+Type error: Route "src/app/api/auth/[...nextauth]/route.ts" does not match the required types of a Next.js Route.
+  "authOptions" is not a valid Route export field.
+
+Next.js build worker exited with code: 1 and signal: null

@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Authentication ─────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("admin") // admin, editor, viewer
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Mahallu (Mosque Unit) ──────────────────────────────────
+model Mahallu {
+  id          String   @id @default(cuid())
+  name        String
+  arabicName  String?
+  address     String?
+  district    String?
+  panchayat   String?
+  pincode     String?
+  phone       String?
+  email       String?
+  president   String?
+  secretary   String?
+  imam        String?
+  established String?
+  logo        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  families   Family[]
+  committees Committee[]
+  events     Event[]
+  announcements Announcement[]
+}
+
+// ─── Family Unit ────────────────────────────────────────────
+model Family {
+  id            String   @id @default(cuid())
+  familyNumber  String   @unique
+  houseName     String
+  houseNumber   String?
+  address       String?
+  ward          String?
+  phone         String?
+  rationCardNo  String?
+  annualIncome  String?
+  isActive      Boolean  @default(true)
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  mahalluId String
+  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+
+  members Member[]
+
+  @@index([mahalluId])
+  @@index([familyNumber])
+}
+
+// ─── Individual Member ──────────────────────────────────────
+model Member {
+  id             String   @id @default(cuid())
+  name           String
+  arabicName     String?
+  relationToHead String   // Head, Spouse, Son, Daughter, Father, Mother, etc.
+  gender         String   // Male, Female
+  dob            DateTime?
+  age            Int?
+  maritalStatus  String?  // Single, Married, Widowed, Divorced
+  phone          String?
+  email          String?
+  bloodGroup     String?
+  education      String?
+  educationDetail String?
+  occupation     String?
+  occupationDetail String?
+  monthlyIncome  String?
+  abroad         Boolean  @default(false)
+  abroadCountry  String?
+  healthIssues   String?
+  disabilities   String?
+  isAlive        Boolean  @default(true)
+  isVoter        Boolean  @default(false)
+  voterIdNo      String?
+  aadhaarNo      String?
+  photo          String?
+  remarks        String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  familyId String
+  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  committeeMemberships CommitteeMember[]
+
+  @@index([familyId])
+  @@index([name])
+}
+
+// ─── Committee ──────────────────────────────────────────────
+model Committee {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  type        String   // Education, Welfare, Youth, Women, Finance, Maintenance, etc.
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  mahalluId String
+  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+
+  members CommitteeMember[]
+
+  @@index([mahalluId])
+}
+
+// ─── Committee Member (Junction) ────────────────────────────
+model CommitteeMember {
+  id        String   @id @default(cuid())
+  role      String   @default("member") // president, secretary, treasurer, member
+  joinedAt  DateTime @default(now())
+  leftAt    DateTime?
+  isActive  Boolean  @default(true)
+
+  memberId    String
+  member      Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  committeeId String
+  committee   Committee @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  @@unique([memberId, committeeId])
+  @@index([memberId])
+  @@index([committeeId])
+}
+
+// ─── Events / Programs ─────────────────────────────────────
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  endDate     DateTime?
+  venue       String?
+  type        String?  // Meeting, Class, Charity, Festival, etc.
+  status      String   @default("upcoming") // upcoming, ongoing, completed, cancelled
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  mahalluId String
+  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+
+  @@index([mahalluId])
+}
+
+// ─── Announcements ──────────────────────────────────────────
+model Announcement {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  priority  String   @default("normal") // low, normal, high, urgent
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mahalluId String
+  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+
+  @@index([mahalluId])
+}
