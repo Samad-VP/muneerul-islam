@@ -36,3 +36,6 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+
+      - name: Deploy to Render (Production)
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_MAIN }}
