@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { BarChart3, Loader2, Users, Home, UserCheck, Globe, Vote } from "lucide-react"
+import { PiChartBarDuotone, PiSpinner, PiUsersDuotone, PiHouseDuotone, PiUserCheckDuotone, PiGlobeDuotone, PiCheckSquareOffsetDuotone } from "react-icons/pi"
 
 export default function ReportsPage() {
   const [data, setData] = useState<any>(null)
@@ -15,10 +15,10 @@ export default function ReportsPage() {
 
   if (loading) {
     return (
-      <div>
-        <h1 style={{ fontSize: "28px", fontWeight: 800, marginBottom: "32px" }} className="gradient-text">Reports & Analytics</h1>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-          {[1,2,3,4].map(i => <div key={i} className="skeleton" style={{ height: "300px" }} />)}
+      <div className="w-full">
+        <h1 className="text-2xl sm:text-3xl font-extrabold mb-8 gradient-text">Reports & Analytics</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+          {[1,2,3,4].map(i => <div key={i} className="skeleton h-[300px] rounded-2xl" />)}
         </div>
       </div>
     )
@@ -30,19 +30,19 @@ export default function ReportsPage() {
   const BarChartSimple = ({ data, title, color }: { data: any[]; title: string; color: string }) => {
     const maxVal = Math.max(...data.map((d: any) => d.value), 1)
     return (
-      <div className="glass-card" style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}>
-          <BarChart3 size={18} style={{ color: "var(--emerald-400)" }} />
+      <div className="glass-card p-5 sm:p-6 w-full">
+        <h3 className="text-base sm:text-lg font-bold mb-5 flex items-center gap-2 text-text-primary">
+          <PiChartBarDuotone size={20} className="text-emerald-400" />
           {title}
         </h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div className="flex flex-col gap-3">
           {data.map((item: any, i: number) => (
             <div key={i}>
-              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>{item.name || "Unknown"}</span>
-                <span style={{ fontSize: "13px", fontWeight: 600, color }}>{item.value}</span>
+              <div className="flex justify-between mb-1.5 font-medium">
+                <span className="text-xs sm:text-sm text-text-secondary">{item.name || "Unknown"}</span>
+                <span className="text-xs sm:text-sm" style={{ color }}>{item.value}</span>
               </div>
-              <div style={{ height: "8px", borderRadius: "4px", background: "var(--bg-primary)", overflow: "hidden" }}>
+              <div className="h-2 rounded-full bg-bg-secondary overflow-hidden">
                 <div style={{
                   height: "100%", borderRadius: "4px",
                   width: `${(item.value / maxVal) * 100}%`,
@@ -52,7 +52,7 @@ export default function ReportsPage() {
               </div>
             </div>
           ))}
-          {data.length === 0 && <p style={{ color: "var(--text-muted)", fontSize: "13px", textAlign: "center", padding: "20px" }}>No data available</p>}
+          {data.length === 0 && <p className="text-text-muted text-sm text-center py-5">No data available</p>}
         </div>
       </div>
     )
@@ -61,11 +61,11 @@ export default function ReportsPage() {
   const PieChartSimple = ({ data, title, colors }: { data: any[]; title: string; colors: string[] }) => {
     const total = data.reduce((acc: number, d: any) => acc + d.value, 0) || 1
     return (
-      <div className="glass-card" style={{ padding: "24px" }}>
-        <h3 style={{ fontSize: "16px", fontWeight: 700, marginBottom: "20px" }}>{title}</h3>
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
+      <div className="glass-card p-5 sm:p-6 w-full flex flex-col items-center">
+        <h3 className="text-base sm:text-lg font-bold mb-6 w-full text-left text-text-primary">{title}</h3>
+        <div className="flex justify-center mb-6">
           <div style={{
-            width: "160px", height: "160px", borderRadius: "50%",
+            width: "140px", height: "140px", borderRadius: "50%",
             background: `conic-gradient(${data.map((d: any, i: number) => {
               const startPct = data.slice(0, i).reduce((a: number, x: any) => a + (x.value / total) * 100, 0)
               const endPct = startPct + (d.value / total) * 100
@@ -73,21 +73,17 @@ export default function ReportsPage() {
             }).join(", ")})`,
             display: "flex", alignItems: "center", justifyContent: "center"
           }}>
-            <div style={{
-              width: "100px", height: "100px", borderRadius: "50%",
-              background: "var(--bg-card)", display: "flex", alignItems: "center", justifyContent: "center",
-              flexDirection: "column"
-            }}>
-              <span style={{ fontSize: "24px", fontWeight: 800, color: "var(--text-primary)" }}>{total}</span>
-              <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>Total</span>
+            <div className="w-[85px] h-[85px] rounded-full bg-bg-card flex flex-col items-center justify-center shadow-inner">
+              <span className="text-xl sm:text-2xl font-extrabold text-text-primary leading-none">{total}</span>
+              <span className="text-[10px] text-text-muted mt-0.5 uppercase tracking-wider font-semibold">Total</span>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", justifyContent: "center" }}>
+        <div className="flex flex-wrap gap-x-4 gap-y-2 justify-center w-full">
           {data.map((d: any, i: number) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <div style={{ width: "10px", height: "10px", borderRadius: "3px", background: colors[i % colors.length] }} />
-              <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{d.name}: {d.value}</span>
+            <div key={i} className="flex items-center gap-2">
+              <div className="w-2.5 h-2.5 rounded-sm" style={{ background: colors[i % colors.length] }} />
+              <span className="text-xs font-medium text-text-secondary">{d.name}: <strong className="text-text-primary">{d.value}</strong></span>
             </div>
           ))}
         </div>
@@ -96,36 +92,38 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="animate-fade-in">
-      <div style={{ marginBottom: "28px" }}>
-        <h1 style={{ fontSize: "28px", fontWeight: 800 }} className="gradient-text">Reports & Analytics</h1>
-        <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginTop: "4px" }}>Community statistics and insights</p>
+    <div className="animate-fade-in w-full">
+      <div className="mb-6 sm:mb-8 text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl font-extrabold gradient-text">Reports & Analytics</h1>
+        <p className="text-text-secondary text-sm mt-1 sm:mt-2">Community statistics and insights</p>
       </div>
 
       {/* Summary Cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "16px", marginBottom: "28px" }}>
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 w-full">
         {[
-          { label: "Families", value: overview.totalFamilies, icon: Home, color: "#10b981" },
-          { label: "Members", value: overview.totalMembers, icon: Users, color: "#3b82f6" },
-          { label: "Committees", value: overview.totalCommittees, icon: UserCheck, color: "#f59e0b" },
-          { label: "Males", value: overview.maleCount, icon: Users, color: "#8b5cf6" },
-          { label: "Females", value: overview.femaleCount, icon: Users, color: "#ec4899" },
-          { label: "Abroad", value: overview.abroadCount, icon: Globe, color: "#06b6d4" },
-          { label: "Voters", value: overview.voterCount, icon: Vote, color: "#f97316" },
+          { label: "Families", value: overview.totalFamilies, icon: PiHouseDuotone, color: "#10b981" },
+          { label: "Members", value: overview.totalMembers, icon: PiUsersDuotone, color: "#3b82f6" },
+          { label: "Committees", value: overview.totalCommittees, icon: PiUserCheckDuotone, color: "#f59e0b" },
+          { label: "Males", value: overview.maleCount, icon: PiUsersDuotone, color: "#8b5cf6" },
+          { label: "Females", value: overview.femaleCount, icon: PiUsersDuotone, color: "#ec4899" },
+          { label: "Abroad", value: overview.abroadCount, icon: PiGlobeDuotone, color: "#06b6d4" },
+          { label: "Voters", value: overview.voterCount, icon: PiCheckSquareOffsetDuotone, color: "#f97316" },
         ].map((s) => {
           const Icon = s.icon
           return (
-            <div key={s.label} className="glass-card" style={{ padding: "20px", textAlign: "center" }}>
-              <Icon size={20} style={{ color: s.color, margin: "0 auto 8px" }} />
-              <p style={{ fontSize: "28px", fontWeight: 800, color: s.color }}>{s.value || 0}</p>
-              <p style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{s.label}</p>
+            <div key={s.label} className="glass-card p-4 sm:p-5 flex flex-col items-center justify-center text-center hover:shadow-md transition-shadow">
+               <div className="p-2 sm:p-2.5 rounded-xl mb-3 flex items-center justify-center" style={{ background: `${s.color}15` }}>
+                 <Icon size={24} style={{ color: s.color }} />
+               </div>
+              <p className="text-2xl sm:text-3xl font-extrabold tracking-tight" style={{ color: s.color }}>{s.value || 0}</p>
+              <p className="text-[11px] sm:text-xs font-semibold text-text-secondary mt-1 uppercase tracking-wider">{s.label}</p>
             </div>
           )
         })}
       </div>
 
       {/* Charts Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 w-full">
         <PieChartSimple
           title="Gender Distribution"
           data={charts.genderDistribution || []}
@@ -146,11 +144,13 @@ export default function ReportsPage() {
           data={charts.bloodGroupDistribution || []}
           colors={["#ef4444", "#f97316", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6", "#ec4899", "#06b6d4"]}
         />
-        <BarChartSimple
-          title="Top Occupations"
-          data={charts.occupationDistribution || []}
-          color="#f59e0b"
-        />
+        <div className="lg:col-span-2">
+           <BarChartSimple
+            title="Top Occupations"
+            data={charts.occupationDistribution || []}
+            color="#f59e0b"
+          />
+        </div>
       </div>
     </div>
   )

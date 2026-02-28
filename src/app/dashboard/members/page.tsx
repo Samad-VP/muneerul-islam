@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { Search, Users, Filter, Loader2, Globe, Droplets, GraduationCap, Briefcase } from "lucide-react"
+import { PiMagnifyingGlass, PiUsersDuotone, PiFadersDuotone, PiSpinner, PiGlobeDuotone, PiDropDuotone, PiGraduationCapDuotone, PiBriefcaseDuotone } from "react-icons/pi"
 
 export default function MembersPage() {
   const [members, setMembers] = useState<any[]>([])
@@ -32,29 +32,29 @@ export default function MembersPage() {
   useEffect(() => { fetchMembers() }, [search, page, filters])
 
   return (
-    <div className="animate-fade-in">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px" }}>
+    <div className="animate-fade-in w-full">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 w-full">
         <div>
-          <h1 style={{ fontSize: "28px", fontWeight: 800 }} className="gradient-text">Members Directory</h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginTop: "4px" }}>
+          <h1 className="text-2xl sm:text-3xl font-extrabold gradient-text">Members Directory</h1>
+          <p className="text-text-secondary text-sm mt-1">
             {total} members found
           </p>
         </div>
         <button
-          className="btn-secondary"
+          className="btn-secondary w-full sm:w-auto justify-center"
           onClick={() => setShowFilters(!showFilters)}
         >
-          <Filter size={16} /> Filters
+          <PiFadersDuotone size={18} /> Filters
         </button>
       </div>
 
       {/* Search & Filters */}
-      <div style={{ marginBottom: "24px" }}>
-        <div style={{ position: "relative", maxWidth: "400px", marginBottom: showFilters ? "16px" : 0 }}>
-          <Search size={18} style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }} />
+      <div className="mb-6 w-full">
+        <div className={`relative w-full sm:w-[400px] ${showFilters ? "mb-4" : ""}`}>
+          <PiMagnifyingGlass size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
           <input
-            className="input-field"
-            style={{ paddingLeft: "42px" }}
+            className="input-field !pl-10 w-full"
             placeholder="Search by name or phone..."
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
@@ -62,18 +62,18 @@ export default function MembersPage() {
         </div>
 
         {showFilters && (
-          <div className="glass-card animate-fade-in" style={{ padding: "20px", display: "flex", gap: "16px", flexWrap: "wrap" }}>
-            <div>
-              <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Gender</label>
-              <select className="input-field" style={{ width: "150px" }} value={filters.gender} onChange={e => setFilters({...filters, gender: e.target.value})}>
+          <div className="glass-card animate-fade-in p-4 sm:p-5 flex flex-wrap gap-4 w-full">
+            <div className="w-full sm:w-auto">
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Gender</label>
+              <select className="input-field w-full sm:w-[150px]" value={filters.gender} onChange={e => setFilters({...filters, gender: e.target.value})}>
                 <option value="">All</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
-            <div>
-              <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Blood Group</label>
-              <select className="input-field" style={{ width: "150px" }} value={filters.bloodGroup} onChange={e => setFilters({...filters, bloodGroup: e.target.value})}>
+            <div className="w-full sm:w-auto">
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Blood Group</label>
+              <select className="input-field w-full sm:w-[150px]" value={filters.bloodGroup} onChange={e => setFilters({...filters, bloodGroup: e.target.value})}>
                 <option value="">All</option>
                 <option value="A+">A+</option><option value="A-">A-</option>
                 <option value="B+">B+</option><option value="B-">B-</option>
@@ -81,9 +81,9 @@ export default function MembersPage() {
                 <option value="AB+">AB+</option><option value="AB-">AB-</option>
               </select>
             </div>
-            <div>
-              <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Education</label>
-              <select className="input-field" style={{ width: "150px" }} value={filters.education} onChange={e => setFilters({...filters, education: e.target.value})}>
+            <div className="w-full sm:w-auto">
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Education</label>
+              <select className="input-field w-full sm:w-[150px]" value={filters.education} onChange={e => setFilters({...filters, education: e.target.value})}>
                 <option value="">All</option>
                 <option value="Primary">Primary</option>
                 <option value="SSLC">SSLC</option>
@@ -92,15 +92,15 @@ export default function MembersPage() {
                 <option value="Post Graduation">Post Graduation</option>
               </select>
             </div>
-            <div>
-              <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Abroad</label>
-              <select className="input-field" style={{ width: "150px" }} value={filters.abroad} onChange={e => setFilters({...filters, abroad: e.target.value})}>
+            <div className="w-full sm:w-auto">
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Abroad</label>
+              <select className="input-field w-full sm:w-[150px]" value={filters.abroad} onChange={e => setFilters({...filters, abroad: e.target.value})}>
                 <option value="">All</option>
                 <option value="true">Abroad Only</option>
               </select>
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end" }}>
-              <button className="btn-secondary" style={{ padding: "8px 14px" }} onClick={() => setFilters({ gender: "", bloodGroup: "", education: "", abroad: "" })}>
+            <div className="flex items-end w-full sm:w-auto mt-2 sm:mt-0">
+              <button className="btn-secondary w-full sm:w-auto justify-center px-4 py-2" onClick={() => setFilters({ gender: "", bloodGroup: "", education: "", abroad: "" })}>
                 Clear All
               </button>
             </div>
@@ -109,83 +109,79 @@ export default function MembersPage() {
       </div>
 
       {/* Members Table */}
-      <div className="glass-card" style={{ overflow: "hidden" }}>
+      <div className="glass-card shadow-sm border border-border-color overflow-hidden w-full">
         {loading ? (
-          <div style={{ padding: "60px", textAlign: "center" }}>
-            <Loader2 size={32} className="animate-spin" style={{ color: "var(--emerald-400)", margin: "0 auto" }} />
+          <div className="p-16 text-center">
+            <PiSpinner size={32} className="animate-spin text-emerald-400 mx-auto" />
           </div>
         ) : members.length === 0 ? (
-          <div style={{ padding: "60px", textAlign: "center" }}>
-            <Users size={48} style={{ color: "var(--text-muted)", margin: "0 auto 16px" }} />
-            <p style={{ color: "var(--text-muted)", fontSize: "16px" }}>No members found</p>
+          <div className="p-16 text-center">
+            <PiUsersDuotone size={48} className="text-text-muted mx-auto mb-4" />
+            <p className="text-text-muted text-base">No members found</p>
           </div>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Family</th>
-                <th>Relation</th>
-                <th>Gender</th>
-                <th>Education</th>
-                <th>Occupation</th>
-                <th>Blood Group</th>
-                <th>Phone</th>
-              </tr>
-            </thead>
-            <tbody>
-              {members.map(m => (
-                <tr key={m.id}>
-                  <td style={{ fontWeight: 600 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{
-                        width: "32px", height: "32px", borderRadius: "50%",
-                        background: m.gender === "Male" ? "rgba(59,130,246,0.15)" : "rgba(236,72,153,0.15)",
-                        display: "flex", alignItems: "center", justifyContent: "center",
-                        fontSize: "13px", fontWeight: 700,
-                        color: m.gender === "Male" ? "#60a5fa" : "#f472b6"
-                      }}>
-                        {m.name?.charAt(0)}
-                      </div>
-                      <div>
-                        {m.name}
-                        {m.abroad && <Globe size={12} style={{ marginLeft: "6px", color: "#06b6d4" }} />}
-                      </div>
-                    </div>
-                  </td>
-                  <td style={{ color: "var(--text-secondary)" }}>{m.family?.houseName || "—"}</td>
-                  <td><span className="badge badge-blue" style={{ fontSize: "11px" }}>{m.relationToHead}</span></td>
-                  <td style={{ color: "var(--text-secondary)" }}>{m.gender}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{m.education || "—"}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{m.occupation || "—"}</td>
-                  <td>{m.bloodGroup ? <span className="badge badge-red" style={{ fontSize: "11px" }}>{m.bloodGroup}</span> : "—"}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{m.phone || "—"}</td>
+          <div className="overflow-x-auto w-full">
+            <table className="data-table w-full min-w-[900px]">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Family</th>
+                  <th>Relation</th>
+                  <th>Gender</th>
+                  <th>Education</th>
+                  <th>Occupation</th>
+                  <th>Blood Group</th>
+                  <th>Phone</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {members.map(m => (
+                  <tr key={m.id} className="hover:bg-bg-secondary/50 transition-colors">
+                    <td className="font-semibold text-text-primary">
+                      <div className="flex items-center gap-2.5">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                          m.gender === "Male" ? "bg-blue-500/15 text-blue-400" : "bg-pink-500/15 text-pink-400"
+                        }`}>
+                          {m.name?.charAt(0)}
+                        </div>
+                        <div className="flex items-center">
+                          {m.name}
+                          {m.abroad && <PiGlobeDuotone size={14} className="ml-1.5 text-cyan-400" />}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="text-text-secondary">{m.family?.houseName || "—"}</td>
+                    <td><span className="badge badge-blue text-[11px]">{m.relationToHead}</span></td>
+                    <td className="text-text-secondary">{m.gender}</td>
+                    <td className="text-text-secondary">{m.education || "—"}</td>
+                    <td className="text-text-secondary">{m.occupation || "—"}</td>
+                    <td>{m.bloodGroup ? <span className="badge badge-red text-[11px]">{m.bloodGroup}</span> : "—"}</td>
+                    <td className="text-text-secondary">{m.phone || "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
       {/* Pagination */}
       {total > 20 && (
-        <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginTop: "24px" }}>
+        <div className="flex justify-center items-center gap-2 mt-8">
           <button
-            className="btn-secondary"
+            className="btn-secondary px-4 py-2"
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
-            style={{ padding: "8px 16px" }}
           >
             Previous
           </button>
-          <span style={{ display: "flex", alignItems: "center", padding: "0 16px", color: "var(--text-secondary)", fontSize: "14px" }}>
+          <span className="px-4 text-sm font-medium text-text-secondary">
             Page {page} of {Math.ceil(total / 20)}
           </span>
           <button
-            className="btn-secondary"
+            className="btn-secondary px-4 py-2"
             disabled={page >= Math.ceil(total / 20)}
             onClick={() => setPage(page + 1)}
-            style={{ padding: "8px 16px" }}
           >
             Next
           </button>

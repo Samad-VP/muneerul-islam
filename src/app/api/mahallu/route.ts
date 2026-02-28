@@ -12,9 +12,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Mahallu name is required" }, { status: 400 })
     }
 
-    const mahallu = await prisma.mahallu.create({
-      data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established }
-    })
+    let mahallu = await prisma.mahallu.findFirst()
+    if (mahallu) {
+      mahallu = await prisma.mahallu.update({
+        where: { id: mahallu.id },
+        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established }
+      })
+    } else {
+      mahallu = await prisma.mahallu.create({
+        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established }
+      })
+    }
 
     return NextResponse.json(mahallu, { status: 201 })
   } catch (error) {

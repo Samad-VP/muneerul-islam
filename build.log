@@ -1,0 +1,131 @@
+
+> muneerul-islam@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/api/announcements/[id]/route.ts
+22:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+31:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/announcements/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+39:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/auth/register/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/[id]/route.ts
+15:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+28:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/members/route.ts
+29:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+50:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+45:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/events/[id]/route.ts
+24:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+33:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/events/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+44:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/[id]/route.ts
+28:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+45:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+54:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/route.ts
+39:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/finance/audit/route.ts
+17:9  Error: 'where' is never reassigned. Use 'const' instead.  prefer-const
+
+./src/app/api/finance/expenses/route.ts
+16:9  Error: 'where' is never reassigned. Use 'const' instead.  prefer-const
+
+./src/app/api/finance/funds/route.ts
+6:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/finance/reports/route.ts
+6:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mahallu/route.ts
+28:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+41:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/[id]/route.ts
+19:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+37:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+46:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/route.ts
+43:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+72:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/portal/donations/route.ts
+6:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/portal/family/route.ts
+6:27  Warning: 'req' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/announcements/page.tsx
+30:60  Warning: React Hook useEffect has a missing dependency: 'fetchAnnouncements'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/committees/page.tsx
+35:57  Warning: React Hook useEffect has a missing dependency: 'fetchCommittees'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/events/page.tsx
+30:53  Warning: React Hook useEffect has a missing dependency: 'fetchEvents'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/families/[id]/page.tsx
+7:3  Warning: 'PiUserDuotone' is defined but never used.  @typescript-eslint/no-unused-vars
+40:38  Warning: React Hook useEffect has a missing dependency: 'fetchFamily'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+185:44  Warning: 'idx' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/families/page.tsx
+60:55  Warning: React Hook useEffect has a missing dependency: 'fetchFamilies'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/finance/expenses/page.tsx
+57:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+76:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/finance/funds/page.tsx
+53:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/finance/incomes/page.tsx
+53:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+72:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/members/page.tsx
+3:89  Warning: 'PiDropDuotone' is defined but never used.  @typescript-eslint/no-unused-vars
+3:104  Warning: 'PiGraduationCapDuotone' is defined but never used.  @typescript-eslint/no-unused-vars
+3:128  Warning: 'PiBriefcaseDuotone' is defined but never used.  @typescript-eslint/no-unused-vars
+32:39  Warning: React Hook useEffect has a missing dependency: 'fetchMembers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/reports/page.tsx
+3:29  Warning: 'PiSpinner' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/settings/page.tsx
+3:10  Warning: 'PiGearDuotone' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'mahallu' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/portal/layout.tsx
+3:30  Warning: 'PiWallet' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Navbar.tsx
+5:23  Warning: 'PiGlobe' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules

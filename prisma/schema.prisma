@@ -13,10 +13,17 @@ model User {
   name      String
   email     String   @unique
   password  String
-  role      String   @default("admin") // admin, editor, viewer
+  role      String   @default("admin") // admin, editor, viewer, super_admin, president, treasurer, secretary, data_entry, family_head
   avatar    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  familyId  String?
+  family    Family?  @relation(fields: [familyId], references: [id], onDelete: SetNull)
+
+  expensesRequested Expense[] @relation("RequestedExpenses")
+  expensesApproved  Expense[] @relation("ApprovedExpenses")
+  auditLogs         AuditLog[]
 }
 
 // ─── Mahallu (Mosque Unit) ──────────────────────────────────
@@ -55,6 +62,7 @@ model Family {
   phone         String?
   rationCardNo  String?
   annualIncome  String?
+  monthlyDueAmount Float @default(0)
   isActive      Boolean  @default(true)
   notes         String?
   createdAt     DateTime @default(now())
@@ -64,6 +72,8 @@ model Family {
   mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
 
   members Member[]
+  users   User[]
+  incomes Income[]
 
   @@index([mahalluId])
   @@index([familyNumber])
@@ -104,6 +114,7 @@ model Member {
   family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
 
   committeeMemberships CommitteeMember[]
+  incomes              Income[]
 
   @@index([familyId])
   @@index([name])
@@ -178,4 +189,86 @@ model Announcement {
   mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
 
   @@index([mahalluId])
+}
+
+// ─── Finance Module ─────────────────────────────────────────
+
+model Fund {
+  id          String   @id @default(cuid())
+  name        String   @unique // General Fund, Ramadan Fund, etc.
+  type        String   @default("general") // general, special
+  description String?
+  balance     Float    @default(0)
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  incomes  Income[]
+  expenses Expense[]
+}
+
+model Income {
+  id           String   @id @default(cuid())
+  receiptNo    String   @unique
+  amount       Float
+  isMonthlyDue Boolean  @default(false)
+  month        Int?     // 1-12
+  year         Int?
+  status       String   @default("PAID") // PENDING, PAID, REVERSED, PARTIAL
+  notes        String?
+  paidAt       DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  fundId       String
+  fund         Fund     @relation(fields: [fundId], references: [id])
+
+  familyId     String?
+  family       Family?  @relation(fields: [familyId], references: [id], onDelete: SetNull)
+
+  memberId     String?
+  member       Member?  @relation(fields: [memberId], references: [id], onDelete: SetNull)
+
+  @@index([fundId])
+  @@index([familyId])
+  @@index([receiptNo])
+}
+
+model Expense {
+  id          String   @id @default(cuid())
+  voucherNo   String   @unique
+  title       String
+  description String?
+  amount      Float
+  status      String   @default("PENDING_APPROVAL") // PENDING_APPROVAL, APPROVED, REJECTED, PAID, REVERSED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  fundId      String
+  fund        Fund     @relation(fields: [fundId], references: [id])
+
+  requestedById String
+  requestedBy   User     @relation("RequestedExpenses", fields: [requestedById], references: [id])
+
+  approvedById  String?
+  approvedBy    User?    @relation("ApprovedExpenses", fields: [approvedById], references: [id])
+
+  @@index([fundId])
+  @@index([status])
+}
+
+model AuditLog {
+  id          String   @id @default(cuid())
+  action      String   // CREATE, UPDATE, DELETE, APPROVE, REVERSE
+  entityType  String   // Income, Expense, Fund
+  entityId    String
+  oldData     String?  // JSON stringified
+  newData     String?  // JSON stringified
+  createdAt   DateTime @default(now())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([entityType, entityId])
+  @@index([userId])
 }

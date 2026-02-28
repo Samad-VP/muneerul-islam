@@ -1,0 +1,2 @@
+ad8fcbc chore: remove exposed .env file and update gitignore
+599e55d fix: prisma build error on vercel (force dynamic routes and postinstall generate)

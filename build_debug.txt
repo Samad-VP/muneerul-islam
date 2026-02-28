@@ -1,0 +1,150 @@
+
+> muneerul-islam@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./src/app/api/announcements/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+39:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/auth/register/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/[id]/route.ts
+22:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+35:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+44:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/members/route.ts
+29:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+50:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/committees/route.ts
+26:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+45:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/events/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+44:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/[id]/route.ts
+28:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+45:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+54:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/families/route.ts
+39:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/mahallu/route.ts
+20:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+33:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/[id]/route.ts
+19:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+37:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+46:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/members/route.ts
+43:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+72:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/announcements/page.tsx
+28:60  Warning: React Hook useEffect has a missing dependency: 'fetchAnnouncements'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/committees/page.tsx
+3:16  Warning: 'Users' is defined but never used.  @typescript-eslint/no-unused-vars
+32:57  Warning: React Hook useEffect has a missing dependency: 'fetchCommittees'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/events/page.tsx
+3:53  Warning: 'Trash2' is defined but never used.  @typescript-eslint/no-unused-vars
+28:53  Warning: React Hook useEffect has a missing dependency: 'fetchEvents'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/families/[id]/page.tsx
+7:3  Warning: 'User' is defined but never used.  @typescript-eslint/no-unused-vars
+7:62  Warning: 'Edit' is defined but never used.  @typescript-eslint/no-unused-vars
+30:38  Warning: React Hook useEffect has a missing dependency: 'fetchFamily'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+98:44  Warning: 'idx' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/families/page.tsx
+59:55  Warning: React Hook useEffect has a missing dependency: 'fetchFamilies'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/members/page.tsx
+3:49  Warning: 'Droplets' is defined but never used.  @typescript-eslint/no-unused-vars
+3:59  Warning: 'GraduationCap' is defined but never used.  @typescript-eslint/no-unused-vars
+3:74  Warning: 'Briefcase' is defined but never used.  @typescript-eslint/no-unused-vars
+32:39  Warning: React Hook useEffect has a missing dependency: 'fetchMembers'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./src/app/dashboard/page.tsx
+5:46  Warning: 'Vote' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/reports/page.tsx
+3:21  Warning: 'Loader2' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/settings/page.tsx
+3:10  Warning: 'Settings' is defined but never used.  @typescript-eslint/no-unused-vars
+6:10  Warning: 'mahallu' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/Navbar.tsx
+5:19  Warning: 'Globe' is defined but never used.  @typescript-eslint/no-unused-vars
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/19) ...
+   Generating static pages (4/19) 
+   Generating static pages (9/19) 
+   Generating static pages (14/19) 
+ ✓ Generating static pages (19/19)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+
+Redirects
+┌ source: /:path+/
+├ destination: /:path+
+└ permanent: true
+
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    5.95 kB         103 kB
+├ ○ /_not-found                          875 B          88.5 kB
+├ ○ /about                               4.55 kB        92.2 kB
+├ ƒ /api/announcements                   0 B                0 B
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ƒ /api/auth/register                   0 B                0 B
+├ ƒ /api/committees                      0 B                0 B
+├ ƒ /api/committees/[id]                 0 B                0 B
+├ ƒ /api/committees/members              0 B                0 B
+├ ƒ /api/events                          0 B                0 B
+├ ƒ /api/families                        0 B                0 B
+├ ƒ /api/families/[id]                   0 B                0 B
+├ ƒ /api/mahallu                         0 B                0 B
+├ ƒ /api/members                         0 B                0 B
+├ ƒ /api/members/[id]                    0 B                0 B
+├ ƒ /api/reports                         0 B                0 B
+├ ○ /committee                           5.91 kB        93.6 kB
+├ ○ /contact                             6.04 kB        93.7 kB
+├ ○ /dashboard                           2.42 kB        99.4 kB
+├ ○ /dashboard/announcements             3.05 kB        90.7 kB
+├ ○ /dashboard/committees                3.54 kB        91.2 kB
+├ ○ /dashboard/events                    3.12 kB        90.8 kB
+├ ○ /dashboard/families                  3.78 kB         101 kB
+├ ƒ /dashboard/families/[id]             3.71 kB         101 kB
+├ ○ /dashboard/members                   3.09 kB        90.8 kB
+├ ○ /dashboard/reports                   2.92 kB        90.6 kB
+├ ○ /dashboard/settings                  2.53 kB        90.2 kB
+├ ○ /gallery                             4.74 kB        92.4 kB
+└ ○ /login                               3.16 kB        90.8 kB
++ First Load JS shared by all            87.7 kB
+  ├ chunks/117-ce8e7a81f3f4556a.js       31.9 kB
+  ├ chunks/fd9d1056-03eebc0f1463ed16.js  53.8 kB
+  └ other shared chunks (total)          1.97 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

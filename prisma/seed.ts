@@ -97,8 +97,10 @@ async function main() {
   ]
 
   for (const f of families) {
-    await prisma.family.create({
-      data: {
+    await prisma.family.upsert({
+      where: { familyNumber: f.familyNumber },
+      update: {},
+      create: {
         familyNumber: f.familyNumber,
         houseName: f.houseName,
         houseNumber: f.houseNumber,
@@ -125,6 +127,59 @@ async function main() {
     })
   }
   console.log("✅ Sample families & members created")
+
+  // --- Finance Module Seeding ---
+  // Create Funds
+  const generalFund = await prisma.fund.upsert({
+    where: { name: "General Fund" },
+    update: {},
+    create: { name: "General Fund", type: "general", description: "Main Mahallu Fund", isDefault: true, balance: 50000 }
+  })
+  const ramadanFund = await prisma.fund.upsert({
+    where: { name: "Ramadan Relief Fund" },
+    update: {},
+    create: { name: "Ramadan Relief Fund", type: "special", description: "Zakat & Relief", isDefault: false, balance: 15000 }
+  })
+  console.log("✅ Funds created")
+
+  // Update Families with default monthlyDueAmount
+  await prisma.family.updateMany({
+    data: { monthlyDueAmount: 500 }
+  })
+  console.log("✅ Families updated with monthly dues")
+
+  // Create additional Admin/Committee Roles
+  const rolesToCreate = [
+    { email: "president@muneerulislam.org", name: "President", role: "president" },
+    { email: "treasurer@muneerulislam.org", name: "Treasurer", role: "treasurer" },
+    { email: "secretary@muneerulislam.org", name: "Secretary", role: "secretary" },
+    { email: "dataentry@muneerulislam.org", name: "Data Entry", role: "data_entry" }
+  ]
+  
+  for (const r of rolesToCreate) {
+    await prisma.user.upsert({
+      where: { email: r.email },
+      update: {},
+      create: { name: r.name, email: r.email, password: hashedPassword, role: r.role }
+    })
+  }
+
+  // Create a Family Head User linked to the first family
+  const firstFamily = await prisma.family.findFirst({ where: { familyNumber: "MUI-001" } })
+  if (firstFamily) {
+    await prisma.user.upsert({
+      where: { email: "head001@muneerulislam.org" },
+      update: {},
+      create: {
+        name: "Family Head (Mohammed Ashraf)",
+        email: "head001@muneerulislam.org",
+        password: hashedPassword,
+        role: "family_head",
+        familyId: firstFamily.id
+      }
+    })
+    console.log("✅ Family Head user created")
+  }
 
   console.log("🎉 Seeding complete!")
 }

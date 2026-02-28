@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Home, Plus, Search, Eye, Trash2, Loader2, X, Users } from "lucide-react"
+import { PiHouseDuotone, PiPlusBold, PiMagnifyingGlass, PiEyeDuotone, PiTrashDuotone, PiSpinner, PiXBold, PiUsersDuotone } from "react-icons/pi"
 
 interface Family {
   id: string
@@ -34,6 +34,7 @@ export default function FamiliesPage() {
     phone: "", bloodGroup: "", education: "", occupation: "", abroad: false,
   }])
   const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
 
   // Get mahallu ID
   useEffect(() => {
@@ -76,6 +77,12 @@ export default function FamiliesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
+    setError("")
+    if (!mahalluId) {
+      setError("Please create a Mahallu first before registering families.")
+      setSubmitting(false)
+      return
+    }
     try {
       const res = await fetch("/api/families", {
         method: "POST",
@@ -87,8 +94,14 @@ export default function FamiliesPage() {
         setForm({ familyNumber: "", houseName: "", houseNumber: "", address: "", ward: "", phone: "", rationCardNo: "", annualIncome: "", notes: "" })
         setMembers([{ name: "", relationToHead: "Head", gender: "Male", dob: "", maritalStatus: "Single", phone: "", bloodGroup: "", education: "", occupation: "", abroad: false }])
         fetchFamilies()
+      } else {
+        const data = await res.json()
+        setError(data?.error || "Failed to register family. Please check all required fields.")
       }
-    } catch (e) { console.error(e) }
+    } catch (e) {
+      console.error(e)
+      setError("An unexpected error occurred.")
+    }
     setSubmitting(false)
   }
 
@@ -99,26 +112,26 @@ export default function FamiliesPage() {
   }
 
   return (
-    <div className="animate-fade-in">
+    <>
+      <div className="animate-fade-in w-full">
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "28px" }}>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 w-full">
         <div>
-          <h1 style={{ fontSize: "28px", fontWeight: 800 }} className="gradient-text">Families</h1>
-          <p style={{ color: "var(--text-secondary)", fontSize: "14px", marginTop: "4px" }}>
+          <h1 className="text-2xl sm:text-3xl font-extrabold gradient-text">Families</h1>
+          <p className="text-text-secondary text-sm mt-1">
             {total} families registered
           </p>
         </div>
-        <button className="btn-primary" onClick={() => setShowModal(true)}>
-          <Plus size={18} /> Register Family
+        <button className="btn-primary w-full sm:w-auto justify-center" onClick={() => setShowModal(true)}>
+          <PiPlusBold size={18} /> Register Family
         </button>
       </div>
 
       {/* Search */}
-      <div style={{ marginBottom: "24px", position: "relative", maxWidth: "400px" }}>
-        <Search size={18} style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", color: "var(--text-muted)" }} />
+      <div className="relative w-full sm:w-[400px] mb-6">
+        <PiMagnifyingGlass size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted" />
         <input
-          className="input-field"
-          style={{ paddingLeft: "42px" }}
+          className="input-field !pl-10 w-full"
           placeholder="Search by house name, family number..."
           value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
@@ -126,217 +139,226 @@ export default function FamiliesPage() {
       </div>
 
       {/* Families Table */}
-      <div className="glass-card" style={{ overflow: "hidden" }}>
+      <div className="glass-card shadow-sm border border-border-color overflow-hidden w-full">
         {loading ? (
-          <div style={{ padding: "60px", textAlign: "center" }}>
-            <Loader2 size={32} className="animate-spin" style={{ color: "var(--emerald-400)", margin: "0 auto" }} />
+          <div className="p-16 text-center">
+            <PiSpinner size={32} className="animate-spin text-emerald-400 mx-auto" />
           </div>
         ) : families.length === 0 ? (
-          <div style={{ padding: "60px", textAlign: "center" }}>
-            <Home size={48} style={{ color: "var(--text-muted)", margin: "0 auto 16px" }} />
-            <p style={{ color: "var(--text-muted)", fontSize: "16px" }}>No families found</p>
-            <button className="btn-primary" style={{ marginTop: "16px" }} onClick={() => setShowModal(true)}>
-              <Plus size={18} /> Register First Family
+          <div className="p-16 text-center">
+            <PiHouseDuotone size={48} className="text-text-muted mx-auto mb-4" />
+            <p className="text-text-muted text-base">No families found</p>
+            <button className="btn-primary mx-auto mt-4" onClick={() => setShowModal(true)}>
+              <PiPlusBold size={18} /> Register First Family
             </button>
           </div>
         ) : (
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Family No.</th>
-                <th>House Name</th>
-                <th>Ward</th>
-                <th>Phone</th>
-                <th>Members</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {families.map(family => (
-                <tr key={family.id}>
-                  <td><span className="badge badge-emerald">{family.familyNumber}</span></td>
-                  <td style={{ fontWeight: 600 }}>{family.houseName}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{family.ward || "—"}</td>
-                  <td style={{ color: "var(--text-secondary)" }}>{family.phone || "—"}</td>
-                  <td>
-                    <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Users size={14} style={{ color: "var(--emerald-400)" }} />
-                      {family._count?.members || family.members?.length || 0}
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`badge ${family.isActive ? "badge-emerald" : "badge-red"}`}>
-                      {family.isActive ? "Active" : "Inactive"}
-                    </span>
-                  </td>
-                  <td>
-                    <div style={{ display: "flex", gap: "8px" }}>
-                      <Link
-                        href={`/dashboard/families/${family.id}`}
-                        style={{ padding: "6px 10px", borderRadius: "8px", background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.2)", color: "#60a5fa", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px", textDecoration: "none" }}
-                      >
-                        <Eye size={14} /> View
-                      </Link>
-                      <button
-                        onClick={() => deleteFamily(family.id)}
-                        style={{ padding: "6px 10px", borderRadius: "8px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: "#f87171", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "4px", fontSize: "12px" }}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto w-full">
+            <table className="data-table w-full min-w-[800px]">
+              <thead>
+                <tr>
+                  <th>Family No.</th>
+                  <th>House Name</th>
+                  <th>Ward</th>
+                  <th>Phone</th>
+                  <th>Members</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {families.map(family => (
+                  <tr key={family.id} className="hover:bg-bg-secondary/50 transition-colors">
+                    <td><span className="badge badge-emerald">{family.familyNumber}</span></td>
+                    <td className="font-semibold text-text-primary">{family.houseName}</td>
+                    <td className="text-text-secondary">{family.ward || "—"}</td>
+                    <td className="text-text-secondary">{family.phone || "—"}</td>
+                    <td>
+                      <span className="flex items-center gap-1.5 font-medium">
+                        <PiUsersDuotone size={16} className="text-emerald-400" />
+                        {family._count?.members || family.members?.length || 0}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`badge ${family.isActive ? "badge-emerald" : "badge-red"}`}>
+                        {family.isActive ? "Active" : "Inactive"}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="flex gap-2">
+                        <Link
+                          href={`/dashboard/families/${family.id}`}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors text-xs font-semibold"
+                        >
+                          <PiEyeDuotone size={16} /> View
+                        </Link>
+                        <button
+                          onClick={() => deleteFamily(family.id)}
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors text-xs font-semibold"
+                        >
+                          <PiTrashDuotone size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
+      </div>
       </div>
 
       {/* Add Family Modal */}
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: "900px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
-              <h2 style={{ fontSize: "22px", fontWeight: 700 }} className="gradient-text">Register New Family</h2>
-              <button onClick={() => setShowModal(false)} style={{ background: "none", border: "none", color: "var(--text-muted)", cursor: "pointer" }}>
-                <X size={24} />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex flex-col justify-end sm:justify-center items-center sm:p-6" onClick={() => setShowModal(false)}>
+          <div className="bg-bg-card border-t sm:border border-border-color rounded-t-2xl sm:rounded-2xl shadow-2xl w-full max-w-4xl max-h-[calc(100vh-1rem)] sm:max-h-[calc(100vh-4rem)] animate-slide-up sm:animate-fade-in flex flex-col" onClick={e => e.stopPropagation()}>
+            <div className="shrink-0 flex justify-between items-center p-5 sm:p-6 border-b border-border-color rounded-t-2xl sm:rounded-2xl">
+              <h2 className="text-xl font-bold gradient-text">Register New Family</h2>
+              <button type="button" onClick={() => setShowModal(false)} className="text-text-muted hover:text-text-primary p-1.5 bg-bg-secondary hover:bg-bg-card-hover rounded-lg transition-colors">
+                <PiXBold size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit}>
+            <div className="overflow-y-auto custom-scrollbar flex-1 min-h-0 p-5 sm:p-6">
+              <form onSubmit={handleSubmit} className="flex flex-col">
+              {error && (
+                <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm font-medium">
+                  {error}
+                </div>
+              )}
               {/* Family Details */}
-              <h3 style={{ fontSize: "15px", fontWeight: 600, marginBottom: "16px", color: "var(--emerald-400)" }}>
+              <h3 className="text-sm font-bold text-emerald-400 mb-4 uppercase tracking-wider">
                 Family Details
               </h3>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px", marginBottom: "24px" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Family Number *</label>
-                  <input className="input-field" required value={form.familyNumber} onChange={e => setForm({...form, familyNumber: e.target.value})} placeholder="MUI-004" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">Family Number *</label>
+                  <input className="input-field w-full" required value={form.familyNumber} onChange={e => setForm({...form, familyNumber: e.target.value})} placeholder="MUI-004" />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>House Name *</label>
-                  <input className="input-field" required value={form.houseName} onChange={e => setForm({...form, houseName: e.target.value})} placeholder="Enter house name" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">House Name *</label>
+                  <input className="input-field w-full" required value={form.houseName} onChange={e => setForm({...form, houseName: e.target.value})} placeholder="Enter house name" />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>House Number</label>
-                  <input className="input-field" value={form.houseNumber} onChange={e => setForm({...form, houseNumber: e.target.value})} placeholder="12/456" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">House Number</label>
+                  <input className="input-field w-full" value={form.houseNumber} onChange={e => setForm({...form, houseNumber: e.target.value})} placeholder="12/456" />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Ward</label>
-                  <input className="input-field" value={form.ward} onChange={e => setForm({...form, ward: e.target.value})} placeholder="Ward 1" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">Ward</label>
+                  <input className="input-field w-full" value={form.ward} onChange={e => setForm({...form, ward: e.target.value})} placeholder="Ward 1" />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Phone</label>
-                  <input className="input-field" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="9876543210" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">Phone</label>
+                  <input className="input-field w-full" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="9876543210" />
                 </div>
                 <div>
-                  <label style={{ fontSize: "12px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Address</label>
-                  <input className="input-field" value={form.address} onChange={e => setForm({...form, address: e.target.value})} placeholder="Address" />
+                  <label className="block text-xs font-medium text-text-secondary mb-1.5">Address</label>
+                  <input className="input-field w-full" value={form.address} onChange={e => setForm({...form, address: e.target.value})} placeholder="Address" />
                 </div>
               </div>
 
               {/* Members */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
-                <h3 style={{ fontSize: "15px", fontWeight: 600, color: "var(--emerald-400)" }}>
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+                <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">
                   Family Members ({members.length})
                 </h3>
-                <button type="button" className="btn-secondary" onClick={addMember} style={{ padding: "6px 14px", fontSize: "13px" }}>
-                  <Plus size={14} /> Add Member
+                <button type="button" className="btn-secondary text-xs py-1.5 px-3 w-full sm:w-auto justify-center" onClick={addMember}>
+                  <PiPlusBold size={14} /> Add Member
                 </button>
               </div>
 
-              {members.map((member, idx) => (
-                <div key={idx} style={{
-                  padding: "16px", marginBottom: "12px", borderRadius: "12px",
-                  background: "var(--bg-primary)", border: "1px solid var(--border-color)"
-                }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-                    <span style={{ fontSize: "13px", fontWeight: 600, color: "var(--text-secondary)" }}>Member {idx + 1}</span>
-                    {members.length > 1 && (
-                      <button type="button" onClick={() => removeMember(idx)} style={{ background: "none", border: "none", color: "#f87171", cursor: "pointer" }}>
-                        <X size={16} />
-                      </button>
-                    )}
+              <div className="space-y-4">
+                {members.map((member, idx) => (
+                  <div key={idx} className="p-4 sm:p-5 rounded-xl bg-bg-primary border border-border-color">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-sm font-bold text-text-secondary">Member {idx + 1}</span>
+                      {members.length > 1 && (
+                        <button type="button" onClick={() => removeMember(idx)} className="text-red-400 border border-red-400/20 bg-red-400/10 p-1.5 rounded-md hover:bg-red-400/20 transition-colors">
+                          <PiXBold size={16} />
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Name *</label>
+                        <input className="input-field w-full" required value={member.name} onChange={e => updateMember(idx, "name", e.target.value)} placeholder="Full name" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Relation *</label>
+                        <select className="input-field w-full" value={member.relationToHead} onChange={e => updateMember(idx, "relationToHead", e.target.value)}>
+                          <option value="Head">Head</option>
+                          <option value="Spouse">Spouse</option>
+                          <option value="Son">Son</option>
+                          <option value="Daughter">Daughter</option>
+                          <option value="Father">Father</option>
+                          <option value="Mother">Mother</option>
+                          <option value="Brother">Brother</option>
+                          <option value="Sister">Sister</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Gender *</label>
+                        <select className="input-field w-full" value={member.gender} onChange={e => updateMember(idx, "gender", e.target.value)}>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Date of Birth</label>
+                        <input className="input-field w-full" type="date" value={member.dob} onChange={e => updateMember(idx, "dob", e.target.value)} />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Education</label>
+                        <select className="input-field w-full" value={member.education} onChange={e => updateMember(idx, "education", e.target.value)}>
+                          <option value="">Select</option>
+                          <option value="Primary">Primary</option>
+                          <option value="SSLC">SSLC</option>
+                          <option value="Plus Two">Plus Two</option>
+                          <option value="Diploma">Diploma</option>
+                          <option value="Graduation">Graduation</option>
+                          <option value="Post Graduation">Post Graduation</option>
+                          <option value="PhD">PhD</option>
+                          <option value="Islamic Studies">Islamic Studies</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Occupation</label>
+                        <input className="input-field w-full" value={member.occupation} onChange={e => updateMember(idx, "occupation", e.target.value)} placeholder="Occupation" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Blood Group</label>
+                        <select className="input-field w-full" value={member.bloodGroup} onChange={e => updateMember(idx, "bloodGroup", e.target.value)}>
+                          <option value="">Select</option>
+                          <option value="A+">A+</option><option value="A-">A-</option>
+                          <option value="B+">B+</option><option value="B-">B-</option>
+                          <option value="O+">O+</option><option value="O-">O-</option>
+                          <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-text-muted mb-1.5">Phone</label>
+                        <input className="input-field w-full" value={member.phone} onChange={e => updateMember(idx, "phone", e.target.value)} placeholder="Phone" />
+                      </div>
+                    </div>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: "12px" }}>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Name *</label>
-                      <input className="input-field" required value={member.name} onChange={e => updateMember(idx, "name", e.target.value)} placeholder="Full name" />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Relation *</label>
-                      <select className="input-field" value={member.relationToHead} onChange={e => updateMember(idx, "relationToHead", e.target.value)}>
-                        <option value="Head">Head</option>
-                        <option value="Spouse">Spouse</option>
-                        <option value="Son">Son</option>
-                        <option value="Daughter">Daughter</option>
-                        <option value="Father">Father</option>
-                        <option value="Mother">Mother</option>
-                        <option value="Brother">Brother</option>
-                        <option value="Sister">Sister</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Gender *</label>
-                      <select className="input-field" value={member.gender} onChange={e => updateMember(idx, "gender", e.target.value)}>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Date of Birth</label>
-                      <input className="input-field" type="date" value={member.dob} onChange={e => updateMember(idx, "dob", e.target.value)} />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Education</label>
-                      <select className="input-field" value={member.education} onChange={e => updateMember(idx, "education", e.target.value)}>
-                        <option value="">Select</option>
-                        <option value="Primary">Primary</option>
-                        <option value="SSLC">SSLC</option>
-                        <option value="Plus Two">Plus Two</option>
-                        <option value="Diploma">Diploma</option>
-                        <option value="Graduation">Graduation</option>
-                        <option value="Post Graduation">Post Graduation</option>
-                        <option value="PhD">PhD</option>
-                        <option value="Islamic Studies">Islamic Studies</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Occupation</label>
-                      <input className="input-field" value={member.occupation} onChange={e => updateMember(idx, "occupation", e.target.value)} placeholder="Occupation" />
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Blood Group</label>
-                      <select className="input-field" value={member.bloodGroup} onChange={e => updateMember(idx, "bloodGroup", e.target.value)}>
-                        <option value="">Select</option>
-                        <option value="A+">A+</option><option value="A-">A-</option>
-                        <option value="B+">B+</option><option value="B-">B-</option>
-                        <option value="O+">O+</option><option value="O-">O-</option>
-                        <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label style={{ fontSize: "11px", color: "var(--text-muted)", display: "block", marginBottom: "3px" }}>Phone</label>
-                      <input className="input-field" value={member.phone} onChange={e => updateMember(idx, "phone", e.target.value)} placeholder="Phone" />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
 
-              <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "24px" }}>
-                <button type="button" className="btn-secondary" onClick={() => setShowModal(false)}>Cancel</button>
-                <button type="submit" className="btn-primary" disabled={submitting}>
-                  {submitting ? <Loader2 size={18} className="animate-spin" /> : <Plus size={18} />}
+              <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">
+                <button type="button" className="btn-secondary w-full sm:w-auto justify-center" onClick={() => setShowModal(false)}>Cancel</button>
+                <button type="submit" className="btn-primary w-full sm:w-auto justify-center" disabled={submitting}>
+                  {submitting ? <PiSpinner size={18} className="animate-spin" /> : <PiPlusBold size={18} />}
                   {submitting ? "Registering..." : "Register Family"}
                 </button>
               </div>
             </form>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
