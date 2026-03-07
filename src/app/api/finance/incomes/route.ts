@@ -23,8 +23,8 @@ export async function GET(req: Request) {
     })
     
     return NextResponse.json(incomes)
-  } catch (error) {
-    console.error("Error fetching incomes:", error)
+  } catch (_err) {
+    console.error("Error fetching incomes:", _err)
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }
@@ -84,8 +84,8 @@ export async function POST(req: Request) {
     })
 
     return NextResponse.json(transaction, { status: 201 })
-  } catch (error) {
-    console.error("Error recording income:", error)
+  } catch (_err) {
+    console.error("Error recording income:", _err)
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }

@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { PiEyeDuotone, PiEyeClosedDuotone, PiLockKeyDuotone, PiEnvelopeDuotone, PiSpinner } from "react-icons/pi"
 
 export default function LoginPage() {
@@ -59,12 +60,11 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md px-4 sm:px-6 animate-fade-in mx-auto">
         {/* Logo and Title */}
         <div className="text-center mb-8 sm:mb-10 w-full">
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl mb-4 sm:mb-6" style={{
-            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05))',
+          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full mb-4 sm:mb-6 overflow-hidden bg-white shrink-0" style={{
             border: '1px solid rgba(16, 185, 129, 0.3)',
             boxShadow: '0 0 40px rgba(16, 185, 129, 0.15)'
           }}>
-            <span className="text-2xl sm:text-3xl">🕌</span>
+            <Image src="/logo.png" alt="Muneerul Islam Logo" width={80} height={80} className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold gradient-text mb-1 sm:mb-2">Muneerul Islam</h1>
           <p className="arabic-text text-base sm:text-lg mb-1 sm:mb-2" style={{ color: 'var(--emerald-400)', opacity: 0.8 }}>منیر الاسلام</p>

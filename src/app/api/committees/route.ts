@@ -23,7 +23,7 @@ export async function GET(request: Request) {
     })
 
     return NextResponse.json(committees)
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(committee, { status: 201 })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Muneerul Islam – Masjid Committee Management System
+
+![Production CI](https://github.com/Samad-VP/muneerul-islam/actions/workflows/production.yml/badge.svg)
+![Preview CI](https://github.com/Samad-VP/muneerul-islam/actions/workflows/preview.yml/badge.svg)
+
+A full-stack web application for managing masjid operations — families, members, committees, finance, events, and announcements.
+
+**Tech Stack:** Next.js 14 · Prisma · PostgreSQL · NextAuth · TailwindCSS
+
+---
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# 1. Clone & install
+git clone https://github.com/Samad-VP/muneerul-islam.git
+cd muneerul-islam
+npm install
+
+# 2. Set up environment
+cp .env.example .env
+# Edit .env with your DATABASE_URL and NEXTAUTH_SECRET
+
+# 3. Push schema to database
+npx prisma db push
+
+# 4. (Optional) Seed sample data
+npm run seed
+
+# 5. Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Production Build
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker build -t muneerul-islam .
+docker run -p 3000:3000 \
+  -e DATABASE_URL="postgresql://..." \
+  -e NEXTAUTH_SECRET="..." \
+  muneerul-islam
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Health check: `GET /api/health` → `{ "status": "ok", "timestamp": "...", "uptime": 123 }`
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## CI/CD
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Branch            | Workflow      | Action                                                 |
+| ----------------- | ------------- | ------------------------------------------------------ |
+| `main`            | Production CI | Lint → Type-check → Build → Deploy to Render           |
+| `dev`             | Preview CI    | Lint → Type-check → Build → Deploy to Render (staging) |
+| PR → `main`/`dev` | Preview CI    | Lint → Type-check → Build (no deploy)                  |
+
+**Required GitHub Secrets:** `NEXTAUTH_SECRET`, `NEXT_PUBLIC_APP_URL`, `RENDER_DEPLOY_HOOK_MAIN`, `RENDER_DEPLOY_HOOK_DEV`
+
+See [.env.example](.env.example) for full details.

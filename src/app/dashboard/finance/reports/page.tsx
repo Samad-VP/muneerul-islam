@@ -15,8 +15,8 @@ export default function FinanceReportsPage() {
       if (res.ok) {
         setReportData(await res.json())
       }
-    } catch (error) {
-      console.error("Failed to fetch reports", error)
+    } catch (_err) {
+      console.error("Failed to fetch reports", _err)
     } finally {
       setLoading(false)
     }

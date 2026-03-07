@@ -16,7 +16,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     })
     if (!member) return NextResponse.json({ error: "Member not found" }, { status: 404 })
     return NextResponse.json(member)
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -34,7 +34,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       include: { family: true }
     })
     return NextResponse.json(member)
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -43,7 +43,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   try {
     await prisma.member.delete({ where: { id: params.id } })
     return NextResponse.json({ message: "Member deleted successfully" })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

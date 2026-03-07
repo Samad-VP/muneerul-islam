@@ -1,9 +1,9 @@
 "use client"
 import { useEffect, useState } from "react"
-import { PiGearDuotone, PiFloppyDiskBold, PiSpinner, PiBuildingsDuotone } from "react-icons/pi"
+import { PiFloppyDiskBold, PiSpinner, PiBuildingsDuotone } from "react-icons/pi"
 
 export default function SettingsPage() {
-  const [mahallu, setMahallu] = useState<any>(null)
+  const [, setMahallu] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({
@@ -45,8 +45,8 @@ export default function SettingsPage() {
       })
       if (!res.ok) throw new Error("Failed to save settings")
       alert("Settings saved successfully!")
-    } catch (error) {
-      console.error(error)
+    } catch (_err) {
+      console.error(_err)
       alert("Error saving settings")
     } finally {
       setSaving(false)

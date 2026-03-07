@@ -27,6 +27,7 @@ export default function AnnouncementsPage() {
       .catch(() => setLoading(false))
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (mahalluId) fetchAnnouncements() }, [mahalluId])
 
   const createAnnouncement = async (e: React.FormEvent) => {

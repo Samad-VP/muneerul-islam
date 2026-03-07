@@ -21,7 +21,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     })
 
     return NextResponse.json(event)
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -30,7 +30,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   try {
     await prisma.event.delete({ where: { id: params.id } })
     return NextResponse.json({ message: "Event deleted successfully" })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

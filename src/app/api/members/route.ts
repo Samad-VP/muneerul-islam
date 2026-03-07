@@ -40,7 +40,7 @@ export async function GET(request: Request) {
     ])
 
     return NextResponse.json({ members, total, page, totalPages: Math.ceil(total / limit) })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(member, { status: 201 })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

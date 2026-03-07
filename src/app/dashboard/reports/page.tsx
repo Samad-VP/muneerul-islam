@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { PiChartBarDuotone, PiSpinner, PiUsersDuotone, PiHouseDuotone, PiUserCheckDuotone, PiGlobeDuotone, PiCheckSquareOffsetDuotone } from "react-icons/pi"
+import { PiChartBarDuotone, PiUsersDuotone, PiHouseDuotone, PiUserCheckDuotone, PiGlobeDuotone, PiCheckSquareOffsetDuotone } from "react-icons/pi"
 
 export default function ReportsPage() {
   const [data, setData] = useState<any>(null)
