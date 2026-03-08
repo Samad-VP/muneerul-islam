@@ -154,59 +154,105 @@ export default function FamiliesPage() {
             </button>
           </div>
         ) : (
-// Fix min-width to ensure horizontal scroll
-          <div className="overflow-x-auto w-full custom-scrollbar pb-2">
-            <table className="data-table w-full min-w-[900px]">
-              <thead>
-                <tr>
-                  <th>Family No.</th>
-                  <th>House Name</th>
-                  <th>Ward</th>
-                  <th>Phone</th>
-                  <th>Members</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {families.map(family => (
-                  <tr key={family.id} className="hover:bg-bg-secondary/50 transition-colors">
-                    <td><span className="badge badge-emerald">{family.familyNumber}</span></td>
-                    <td className="font-semibold text-text-primary">{family.houseName}</td>
-                    <td className="text-text-secondary">{family.ward || "—"}</td>
-                    <td className="text-text-secondary">{family.phone || "—"}</td>
-                    <td>
-                      <span className="flex items-center gap-1.5 font-medium">
-                        <PiUsersDuotone size={16} className="text-emerald-400" />
+          <>
+            {/* Mobile Card View */}
+            <div className="grid grid-cols-1 gap-4 w-full md:hidden p-4">
+              {families.map(family => (
+                <div key={`mobile-${family.id}`} className="flex flex-col p-4 bg-bg-primary border border-border-color rounded-xl gap-3 shadow-sm hover:border-emerald-500/30 transition-colors">
+                  <div className="flex justify-between items-start gap-2">
+                    <div>
+                      <h3 className="font-bold text-text-primary text-base leading-tight">{family.houseName}</h3>
+                      <p className="font-medium text-emerald-500 text-xs mt-0.5">{family.familyNumber}</p>
+                    </div>
+                    <span className={`badge shrink-0 ${family.isActive ? "badge-emerald" : "badge-red"}`}>
+                      {family.isActive ? "Active" : "Inactive"}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 text-sm text-text-secondary mt-1">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Ward</span>
+                      <span className="font-medium">{family.ward || "—"}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Phone</span>
+                      <span className="font-medium">{family.phone || "—"}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Members</span>
+                      <span className="font-medium flex items-center gap-1.5 text-text-primary">
+                        <PiUsersDuotone size={14} className="text-emerald-400" />
                         {family._count?.members || family.members?.length || 0}
                       </span>
-                    </td>
-                    <td>
-                      <span className={`badge ${family.isActive ? "badge-emerald" : "badge-red"}`}>
-                        {family.isActive ? "Active" : "Inactive"}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="flex gap-2">
-                        <Link
-                          href={`/dashboard/families/${family.id}`}
-                          className="btn-action"
-                        >
-                          <PiEyeDuotone size={16} /> View
-                        </Link>
-                        <button
-                          onClick={() => deleteFamily(family.id)}
-                          className="btn-action danger"
-                        >
-                          <PiTrashDuotone size={16} /> Delete
-                        </button>
-                      </div>
-                    </td>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-2 pt-3 border-t border-border-color mt-1">
+                    <Link href={`/dashboard/families/${family.id}`} className="btn-action flex-1 justify-center py-2 h-auto text-sm">
+                      <PiEyeDuotone size={16} /> View
+                    </Link>
+                    <button onClick={() => deleteFamily(family.id)} className="btn-action danger flex-1 justify-center py-2 h-auto text-sm">
+                      <PiTrashDuotone size={16} /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto w-full custom-scrollbar pb-2">
+              <table className="data-table w-full min-w-[900px]">
+                <thead>
+                  <tr>
+                    <th>Family No.</th>
+                    <th>House Name</th>
+                    <th>Ward</th>
+                    <th>Phone</th>
+                    <th>Members</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {families.map(family => (
+                    <tr key={family.id} className="hover:bg-bg-secondary/50 transition-colors">
+                      <td><span className="badge badge-emerald">{family.familyNumber}</span></td>
+                      <td className="font-semibold text-text-primary">{family.houseName}</td>
+                      <td className="text-text-secondary">{family.ward || "—"}</td>
+                      <td className="text-text-secondary">{family.phone || "—"}</td>
+                      <td>
+                        <span className="flex items-center gap-1.5 font-medium">
+                          <PiUsersDuotone size={16} className="text-emerald-400" />
+                          {family._count?.members || family.members?.length || 0}
+                        </span>
+                      </td>
+                      <td>
+                        <span className={`badge ${family.isActive ? "badge-emerald" : "badge-red"}`}>
+                          {family.isActive ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="flex gap-2">
+                          <Link
+                            href={`/dashboard/families/${family.id}`}
+                            className="btn-action"
+                          >
+                            <PiEyeDuotone size={16} /> View
+                          </Link>
+                          <button
+                            onClick={() => deleteFamily(family.id)}
+                            className="btn-action danger"
+                          >
+                            <PiTrashDuotone size={16} /> Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
       </div>

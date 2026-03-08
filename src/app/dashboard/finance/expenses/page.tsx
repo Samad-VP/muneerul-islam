@@ -95,69 +95,128 @@ export default function ExpensesPage() {
       </div>
 
       <div className="bg-bg-card border border-border-color rounded-xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto custom-scrollbar pb-2">
-          <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
-            <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Voucher No</th>
-                <th className="px-6 py-4 font-semibold">Details</th>
-                <th className="px-6 py-4 font-semibold">Fund</th>
-                <th className="px-6 py-4 font-semibold text-right">Amount</th>
-                <th className="px-6 py-4 font-semibold">Status</th>
-                {canApprove && <th className="px-6 py-4 font-semibold text-right">Actions</th>}
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border-color">
-              {loading ? (
-                <tr><td colSpan={canApprove ? 6 : 5} className="text-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div></td></tr>
-              ) : expenses.length === 0 ? (
-                <tr><td colSpan={canApprove ? 6 : 5} className="text-center py-12 text-text-muted">No expenses recorded yet.</td></tr>
-              ) : expenses.map((exp) => (
-                <tr key={exp.id} className="hover:bg-bg-secondary/30 transition-colors">
-                  <td className="px-6 py-4 font-mono text-xs">{exp.voucherNo}</td>
-                  <td className="px-6 py-4">
-                    <div className="font-semibold text-text-primary mb-1">{exp.title}</div>
-                    <div className="text-xs text-text-muted flex gap-2">
-                      <span>Req by: {exp.requestedBy?.name}</span>
-                      {exp.approvedBy && <span>• Appr by: {exp.approvedBy.name}</span>}
+          <>
+            {/* Mobile Card View */}
+            <div className="grid grid-cols-1 gap-4 w-full md:hidden p-4">
+              {expenses.map(exp => (
+                <div key={`mobile-${exp.id}`} className="flex flex-col p-4 bg-bg-primary border border-border-color rounded-xl gap-3 shadow-sm hover:border-emerald-500/30 transition-colors">
+                  <div className="flex justify-between items-start gap-2">
+                    <div className="flex flex-col">
+                      <h3 className="font-bold text-text-primary text-base leading-tight">{exp.title}</h3>
+                      <p className="text-xs text-text-muted mt-1">Req by: <span className="font-medium text-text-secondary">{exp.requestedBy?.name}</span></p>
+                      {exp.approvedBy && (
+                        <p className="text-[10px] text-text-muted mt-0.5">Appr by: {exp.approvedBy.name}</p>
+                      )}
                     </div>
-                  </td>
-                  <td className="px-6 py-4">{exp.fund?.name || '-'}</td>
-                  <td className="px-6 py-4 text-right font-bold text-red-400">₹ {exp.amount}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                      exp.status === 'APPROVED' || exp.status === 'PAID' ? 'bg-emerald-500/10 text-emerald-500' :
-                      exp.status === 'PENDING_APPROVAL' ? 'bg-amber-500/10 text-amber-500' : 'bg-red-500/10 text-red-500'
+                    <span className={`badge shrink-0 text-[10px] ${
+                      exp.status === 'APPROVED' || exp.status === 'PAID' ? 'badge-emerald' :
+                      exp.status === 'PENDING_APPROVAL' ? 'badge-gold' : 'badge-red'
                     }`}>
-                      {exp.status === 'APPROVED' || exp.status === 'PAID' ? <PiCheckCircle size={14} /> : 
-                       exp.status === 'PENDING_APPROVAL' ? <PiWarningCircle size={14} /> : <PiXCircle size={14} />}
+                      {exp.status === 'APPROVED' || exp.status === 'PAID' ? <PiCheckCircle size={12} /> : 
+                       exp.status === 'PENDING_APPROVAL' ? <PiWarningCircle size={12} /> : <PiXCircle size={12} />}
                       {exp.status.replace("_", " ")}
                     </span>
-                  </td>
-                  {canApprove && (
-                    <td className="px-6 py-4 text-right">
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-1 pt-3 border-t border-border-color">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Amount</span>
+                      <span className="font-bold text-red-500 text-lg">₹ {exp.amount}</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Voucher No</span>
+                      <span className="font-mono text-xs font-medium text-text-secondary mt-1">{exp.voucherNo}</span>
+                    </div>
+                  </div>
+
+                  {canApprove && (exp.status === 'PENDING_APPROVAL' || exp.status === 'APPROVED') && (
+                    <div className="flex gap-2 pt-3 border-t border-border-color mt-1">
                       {exp.status === 'PENDING_APPROVAL' && (
-                        <div className="flex justify-end gap-2">
-                          <button onClick={() => handleStatusUpdate(exp.id, 'APPROVED')} className="btn-action">
+                        <>
+                          <button onClick={() => handleStatusUpdate(exp.id, 'APPROVED')} className="btn-action flex-1 justify-center py-2 h-auto text-sm">
                             Approve
                           </button>
-                          <button onClick={() => handleStatusUpdate(exp.id, 'REJECTED')} className="btn-action danger">
+                          <button onClick={() => handleStatusUpdate(exp.id, 'REJECTED')} className="btn-action danger flex-1 justify-center py-2 h-auto text-sm">
                             Reject
                           </button>
-                        </div>
+                        </>
                       )}
                       {exp.status === 'APPROVED' && (
-                        <button onClick={() => handleStatusUpdate(exp.id, 'PAID')} className="btn-action">
+                        <button onClick={() => handleStatusUpdate(exp.id, 'PAID')} className="btn-action flex-1 justify-center py-2 h-auto text-sm">
                           Mark Paid
                         </button>
                       )}
-                    </td>
+                    </div>
                   )}
-                </tr>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto custom-scrollbar pb-2">
+              <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
+                <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
+                  <tr>
+                    <th className="px-6 py-4 font-semibold">Voucher No</th>
+                    <th className="px-6 py-4 font-semibold">Details</th>
+                    <th className="px-6 py-4 font-semibold">Fund</th>
+                    <th className="px-6 py-4 font-semibold text-right">Amount</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
+                    {canApprove && <th className="px-6 py-4 font-semibold text-right">Actions</th>}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border-color">
+                  {loading ? (
+                    <tr><td colSpan={canApprove ? 6 : 5} className="text-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div></td></tr>
+                  ) : expenses.length === 0 ? (
+                    <tr><td colSpan={canApprove ? 6 : 5} className="text-center py-12 text-text-muted">No expenses recorded yet.</td></tr>
+                  ) : expenses.map((exp) => (
+                    <tr key={exp.id} className="hover:bg-bg-secondary/30 transition-colors">
+                      <td className="px-6 py-4 font-mono text-xs">{exp.voucherNo}</td>
+                      <td className="px-6 py-4">
+                        <div className="font-semibold text-text-primary mb-1">{exp.title}</div>
+                        <div className="text-xs text-text-muted flex gap-2">
+                          <span>Req by: {exp.requestedBy?.name}</span>
+                          {exp.approvedBy && <span>• Appr by: {exp.approvedBy.name}</span>}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">{exp.fund?.name || '-'}</td>
+                      <td className="px-6 py-4 text-right font-bold text-red-500">₹ {exp.amount}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          exp.status === 'APPROVED' || exp.status === 'PAID' ? 'bg-emerald-500/10 text-emerald-500' :
+                          exp.status === 'PENDING_APPROVAL' ? 'bg-amber-500/10 text-amber-500' : 'bg-red-500/10 text-red-500'
+                        }`}>
+                          {exp.status === 'APPROVED' || exp.status === 'PAID' ? <PiCheckCircle size={14} /> : 
+                           exp.status === 'PENDING_APPROVAL' ? <PiWarningCircle size={14} /> : <PiXCircle size={14} />}
+                          {exp.status.replace("_", " ")}
+                        </span>
+                      </td>
+                      {canApprove && (
+                        <td className="px-6 py-4 text-right">
+                          {exp.status === 'PENDING_APPROVAL' && (
+                            <div className="flex justify-end gap-2">
+                              <button onClick={() => handleStatusUpdate(exp.id, 'APPROVED')} className="btn-action">
+                                Approve
+                              </button>
+                              <button onClick={() => handleStatusUpdate(exp.id, 'REJECTED')} className="btn-action danger">
+                                Reject
+                              </button>
+                            </div>
+                          )}
+                          {exp.status === 'APPROVED' && (
+                            <button onClick={() => handleStatusUpdate(exp.id, 'PAID')} className="btn-action">
+                              Mark Paid
+                            </button>
+                          )}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
       </div>
 
       {isRequestModalOpen && (

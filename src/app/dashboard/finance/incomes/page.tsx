@@ -94,49 +94,99 @@ export default function IncomesPage() {
       </div>
 
       <div className="bg-bg-card border border-border-color rounded-xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto custom-scrollbar pb-2">
-          <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
-            <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
-              <tr>
-                <th className="px-6 py-4 font-semibold">Receipt No</th>
-                <th className="px-6 py-4 font-semibold">Date</th>
-                <th className="px-6 py-4 font-semibold">Details</th>
-                <th className="px-6 py-4 font-semibold">Fund</th>
-                <th className="px-6 py-4 font-semibold text-right">Amount</th>
-                <th className="px-6 py-4 font-semibold">Status</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border-color">
-              {loading ? (
-                <tr><td colSpan={6} className="text-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div></td></tr>
-              ) : incomes.length === 0 ? (
-                <tr><td colSpan={6} className="text-center py-12 text-text-muted">No incomes recorded yet.</td></tr>
-              ) : incomes.map((inc) => (
-                <tr key={inc.id} className="hover:bg-bg-secondary/30 transition-colors">
-                  <td className="px-6 py-4 font-mono text-xs">{inc.receiptNo}</td>
-                  <td className="px-6 py-4">{new Date(inc.createdAt).toLocaleDateString()}</td>
-                  <td className="px-6 py-4">
-                    <div className="font-medium text-text-primary">
-                      {inc.isMonthlyDue ? `Monthly Due (${inc.month}/${inc.year})` : 'Special Donation'}
+          <>
+            {/* Mobile Card View */}
+            <div className="grid grid-cols-1 gap-4 w-full md:hidden p-4">
+              {incomes.map(inc => (
+                <div key={`mobile-${inc.id}`} className="flex flex-col p-4 bg-bg-primary border border-border-color rounded-xl gap-3 shadow-sm hover:border-emerald-500/30 transition-colors">
+                  <div className="flex justify-between items-start gap-2">
+                    <div className="flex flex-col">
+                      <h3 className="font-bold text-text-primary text-base leading-tight">
+                        {inc.isMonthlyDue ? `Monthly Due (${inc.month}/${inc.year})` : 'Special Donation'}
+                      </h3>
+                      {inc.family?.familyNumber && (
+                        <p className="text-xs text-text-muted mt-0.5">Family: {inc.family.familyNumber}</p>
+                      )}
                     </div>
-                    {inc.family?.familyNumber && <div className="text-xs text-text-muted">Family: {inc.family.familyNumber}</div>}
-                  </td>
-                  <td className="px-6 py-4">{inc.fund?.name || '-'}</td>
-                  <td className="px-6 py-4 text-right font-bold text-text-primary">₹ {inc.amount}</td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
-                      inc.status === 'PAID' ? 'bg-emerald-500/10 text-emerald-500' :
-                      inc.status === 'PENDING' ? 'bg-amber-500/10 text-amber-500' : 'bg-red-500/10 text-red-500'
+                    <span className={`badge shrink-0 text-[10px] ${
+                      inc.status === 'PAID' ? 'badge-emerald' :
+                      inc.status === 'PENDING' ? 'badge-gold' : 'badge-red'
                     }`}>
-                      {inc.status === 'PAID' ? <PiCheckCircle size={14} /> : <PiClock size={14} />}
+                      {inc.status === 'PAID' ? <PiCheckCircle size={12} /> : <PiClock size={12} />}
                       {inc.status}
                     </span>
-                  </td>
-                </tr>
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-1">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Amount</span>
+                      <span className="font-bold text-text-primary text-lg">₹ {inc.amount}</span>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Date</span>
+                      <span className="text-sm font-medium text-text-secondary">{new Date(inc.createdAt).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-sm text-text-secondary mt-1 pt-3 border-t border-border-color">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Receipt No</span>
+                      <span className="font-mono text-xs mt-0.5">{inc.receiptNo}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Target Fund</span>
+                      <span className="font-medium truncate mt-0.5">{inc.fund?.name || '-'}</span>
+                    </div>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto custom-scrollbar pb-2">
+              <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
+                <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
+                  <tr>
+                    <th className="px-6 py-4 font-semibold">Receipt No</th>
+                    <th className="px-6 py-4 font-semibold">Date</th>
+                    <th className="px-6 py-4 font-semibold">Details</th>
+                    <th className="px-6 py-4 font-semibold">Fund</th>
+                    <th className="px-6 py-4 font-semibold text-right">Amount</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border-color">
+                  {loading ? (
+                    <tr><td colSpan={6} className="text-center py-12"><div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto"></div></td></tr>
+                  ) : incomes.length === 0 ? (
+                    <tr><td colSpan={6} className="text-center py-12 text-text-muted">No incomes recorded yet.</td></tr>
+                  ) : incomes.map((inc) => (
+                    <tr key={inc.id} className="hover:bg-bg-secondary/30 transition-colors">
+                      <td className="px-6 py-4 font-mono text-xs">{inc.receiptNo}</td>
+                      <td className="px-6 py-4">{new Date(inc.createdAt).toLocaleDateString()}</td>
+                      <td className="px-6 py-4">
+                        <div className="font-medium text-text-primary">
+                          {inc.isMonthlyDue ? `Monthly Due (${inc.month}/${inc.year})` : 'Special Donation'}
+                        </div>
+                        {inc.family?.familyNumber && <div className="text-xs text-text-muted">Family: {inc.family.familyNumber}</div>}
+                      </td>
+                      <td className="px-6 py-4">{inc.fund?.name || '-'}</td>
+                      <td className="px-6 py-4 text-right font-bold text-text-primary">₹ {inc.amount}</td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${
+                          inc.status === 'PAID' ? 'bg-emerald-500/10 text-emerald-500' :
+                          inc.status === 'PENDING' ? 'bg-amber-500/10 text-amber-500' : 'bg-red-500/10 text-red-500'
+                        }`}>
+                          {inc.status === 'PAID' ? <PiCheckCircle size={14} /> : <PiClock size={14} />}
+                          {inc.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
       </div>
 
       {isRecordModalOpen && (

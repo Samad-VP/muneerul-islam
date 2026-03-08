@@ -121,48 +121,94 @@ export default function MembersPage() {
             <p className="text-text-muted text-base">No members found</p>
           </div>
         ) : (
-          <div className="overflow-x-auto w-full">
-            <table className="data-table w-full min-w-[900px]">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Family</th>
-                  <th>Relation</th>
-                  <th>Gender</th>
-                  <th>Education</th>
-                  <th>Occupation</th>
-                  <th>Blood Group</th>
-                  <th>Phone</th>
-                </tr>
-              </thead>
-              <tbody>
-                {members.map(m => (
-                  <tr key={m.id} className="hover:bg-bg-secondary/50 transition-colors">
-                    <td className="font-semibold text-text-primary">
-                      <div className="flex items-center gap-2.5">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                          m.gender === "Male" ? "bg-blue-500/15 text-blue-400" : "bg-pink-500/15 text-pink-400"
-                        }`}>
-                          {m.name?.charAt(0)}
-                        </div>
-                        <div className="flex items-center">
-                          {m.name}
-                          {m.abroad && <PiGlobeDuotone size={14} className="ml-1.5 text-cyan-400" />}
-                        </div>
+          <>
+            {/* Mobile Card View */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:hidden p-4">
+              {members.map(m => (
+                <div key={`mobile-${m.id}`} className="flex flex-col p-4 bg-bg-primary border border-border-color rounded-xl gap-3 shadow-sm hover:border-emerald-500/30 transition-colors">
+                  <div className="flex items-center gap-3 w-full">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                      m.gender === "Male" ? "bg-blue-500/15 text-blue-400" : "bg-pink-500/15 text-pink-400"
+                    }`}>
+                      {m.name?.charAt(0)}
+                    </div>
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <h3 className="font-bold text-text-primary text-base leading-tight truncate">{m.name}</h3>
+                        {m.abroad && <PiGlobeDuotone size={14} className="text-cyan-400 shrink-0" />}
                       </div>
-                    </td>
-                    <td className="text-text-secondary">{m.family?.houseName || "—"}</td>
-                    <td><span className="badge badge-blue text-[11px]">{m.relationToHead}</span></td>
-                    <td className="text-text-secondary">{m.gender}</td>
-                    <td className="text-text-secondary">{m.education || "—"}</td>
-                    <td className="text-text-secondary">{m.occupation || "—"}</td>
-                    <td>{m.bloodGroup ? <span className="badge badge-red text-[11px]">{m.bloodGroup}</span> : "—"}</td>
-                    <td className="text-text-secondary">{m.phone || "—"}</td>
+                      <span className="text-xs text-text-muted truncate">{m.family?.houseName || "—"}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    <span className="badge badge-blue text-[10px]">{m.relationToHead}</span>
+                    <span className="badge bg-bg-secondary text-text-secondary border-border-color text-[10px]">{m.gender}</span>
+                    {m.bloodGroup && <span className="badge badge-red text-[10px]">{m.bloodGroup}</span>}
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 text-sm text-text-secondary mt-1 pt-3 border-t border-border-color">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Education</span>
+                      <span className="font-medium truncate">{m.education || "—"}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Occupation</span>
+                      <span className="font-medium truncate">{m.occupation || "—"}</span>
+                    </div>
+                    <div className="flex flex-col col-span-2">
+                      <span className="text-[10px] uppercase tracking-wider text-text-muted font-bold">Phone</span>
+                      <span className="font-medium">{m.phone || "—"}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto w-full custom-scrollbar pb-2">
+              <table className="data-table w-full min-w-[900px]">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Family</th>
+                    <th>Relation</th>
+                    <th>Gender</th>
+                    <th>Education</th>
+                    <th>Occupation</th>
+                    <th>Blood Group</th>
+                    <th>Phone</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {members.map(m => (
+                    <tr key={m.id} className="hover:bg-bg-secondary/50 transition-colors">
+                      <td className="font-semibold text-text-primary">
+                        <div className="flex items-center gap-2.5">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
+                            m.gender === "Male" ? "bg-blue-500/15 text-blue-400" : "bg-pink-500/15 text-pink-400"
+                          }`}>
+                            {m.name?.charAt(0)}
+                          </div>
+                          <div className="flex items-center">
+                            {m.name}
+                            {m.abroad && <PiGlobeDuotone size={14} className="ml-1.5 text-cyan-400" title="Abroad" />}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="text-text-secondary">{m.family?.houseName || "—"}</td>
+                      <td><span className="badge badge-blue text-[11px]">{m.relationToHead}</span></td>
+                      <td className="text-text-secondary">{m.gender}</td>
+                      <td className="text-text-secondary">{m.education || "—"}</td>
+                      <td className="text-text-secondary">{m.occupation || "—"}</td>
+                      <td>{m.bloodGroup ? <span className="badge badge-red text-[11px]">{m.bloodGroup}</span> : "—"}</td>
+                      <td className="text-text-secondary">{m.phone || "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
