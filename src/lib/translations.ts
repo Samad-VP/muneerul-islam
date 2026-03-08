@@ -74,6 +74,25 @@ export const translations = {
       message: "Message",
       send: "Send Message",
     },
+    dashboard: {
+      nav: {
+        dashboard: "Dashboard",
+        families: "Families",
+        members: "Members",
+        committees: "Committees",
+        events: "Events",
+        announcements: "Announcements",
+        funds: "Funds",
+        incomes: "Incomes Check",
+        expenses: "Expenses",
+        financeReports: "Finance Reports",
+        generalReports: "General Reports",
+        settings: "Settings",
+        logout: "Logout",
+        mainMenu: "Main Menu",
+        managementSystem: "Management System",
+      }
+    }
   },
   ml: {
     nav: {
@@ -148,5 +167,24 @@ export const translations = {
       message: "സന്ദേശം",
       send: "സന്ദേശം അയക്കുക",
     },
+    dashboard: {
+      nav: {
+        dashboard: "ഡാഷ്ബോർഡ്",
+        families: "കുടുംബങ്ങൾ",
+        members: "അംഗങ്ങൾ",
+        committees: "കമ്മിറ്റികൾ",
+        events: "പരിപാടികൾ",
+        announcements: "അറിയിപ്പുകൾ",
+        funds: "ഫണ്ടുകൾ",
+        incomes: "വരുമാനം പരിശോധിക്കുക",
+        expenses: "ചെലവുകൾ",
+        financeReports: "സാമ്പത്തിക റിപ്പോർട്ടുകൾ",
+        generalReports: "പൊതു റിപ്പോർട്ടുകൾ",
+        settings: "ക്രമീകരണങ്ങൾ",
+        logout: "ലോഗൗട്ട്",
+        mainMenu: "പ്രധാന മെനു",
+        managementSystem: "മാനേജ്മെന്റ് സിസ്റ്റം",
+      }
+    }
   },
 }

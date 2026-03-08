@@ -12,23 +12,23 @@ import ThemeToggle from "@/components/ThemeToggle"
 import { useLanguage } from "@/context/LanguageContext"
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: PiSquaresFour },
-  { href: "/dashboard/families", label: "Families", icon: PiHouse },
-  { href: "/dashboard/members", label: "Members", icon: PiUsers },
-  { href: "/dashboard/committees", label: "Committees", icon: PiUserCheck },
-  { href: "/dashboard/events", label: "Events", icon: PiCalendarBlank },
-  { href: "/dashboard/announcements", label: "Announcements", icon: PiMegaphone },
-  { href: "/dashboard/finance/funds", label: "Funds", icon: PiBank },
-  { href: "/dashboard/finance/incomes", label: "Incomes Check", icon: PiWallet },
-  { href: "/dashboard/finance/expenses", label: "Expenses", icon: PiReceipt },
-  { href: "/dashboard/finance/reports", label: "Finance Reports", icon: PiListChecks },
-  { href: "/dashboard/reports", label: "General Reports", icon: PiChartBar },
-  { href: "/dashboard/settings", label: "Settings", icon: PiGear },
+  { href: "/dashboard", labelKey: "dashboard.nav.dashboard", icon: PiSquaresFour },
+  { href: "/dashboard/families", labelKey: "dashboard.nav.families", icon: PiHouse },
+  { href: "/dashboard/members", labelKey: "dashboard.nav.members", icon: PiUsers },
+  { href: "/dashboard/committees", labelKey: "dashboard.nav.committees", icon: PiUserCheck },
+  { href: "/dashboard/events", labelKey: "dashboard.nav.events", icon: PiCalendarBlank },
+  { href: "/dashboard/announcements", labelKey: "dashboard.nav.announcements", icon: PiMegaphone },
+  { href: "/dashboard/finance/funds", labelKey: "dashboard.nav.funds", icon: PiBank },
+  { href: "/dashboard/finance/incomes", labelKey: "dashboard.nav.incomes", icon: PiWallet },
+  { href: "/dashboard/finance/expenses", labelKey: "dashboard.nav.expenses", icon: PiReceipt },
+  { href: "/dashboard/finance/reports", labelKey: "dashboard.nav.financeReports", icon: PiListChecks },
+  { href: "/dashboard/reports", labelKey: "dashboard.nav.generalReports", icon: PiChartBar },
+  { href: "/dashboard/settings", labelKey: "dashboard.nav.settings", icon: PiGear },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const { language, setLanguage } = useLanguage()
+  const { language, setLanguage, t } = useLanguage()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </div>
             <div>
               <h2 className="text-base font-bold text-text-primary leading-tight">Muneerul Islam</h2>
-              <p className="text-[11px] text-text-muted font-medium">Management System</p>
+              <p className="text-[11px] text-text-muted font-medium">{t("dashboard.nav.managementSystem")}</p>
             </div>
           </div>
           <button
@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Navigation */}
         <nav className="flex-1 p-4 overflow-y-auto w-full">
           <div className="mb-3 px-2">
-            <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider">Main Menu</p>
+            <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider">{t("dashboard.nav.mainMenu")}</p>
           </div>
           {navItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
@@ -91,7 +91,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 }`}
               >
                 <Icon size={20} className={isActive ? "text-emerald-400" : "text-text-muted group-hover:text-emerald-400 transition-colors"} />
-                <span className="flex-1">{item.label}</span>
+                <span className="flex-1">{t(item.labelKey)}</span>
                 {isActive && <PiCaretRight size={14} className="opacity-50" />}
               </Link>
             )
@@ -105,7 +105,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-red-400 bg-red-400/5 border border-red-400/10 hover:bg-red-400/10 hover:text-red-300 transition-all font-medium"
           >
             <PiSignOut size={20} />
-            <span>Logout</span>
+            <span>{t("dashboard.nav.logout")}</span>
           </button>
         </div>
       </aside>
