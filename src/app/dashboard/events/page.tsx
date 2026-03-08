@@ -27,6 +27,7 @@ export default function EventsPage() {
       .catch(() => setLoading(false))
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (mahalluId) fetchEvents() }, [mahalluId])
 
   const createEvent = async (e: React.FormEvent) => {

@@ -57,6 +57,7 @@ export default function FamiliesPage() {
       .catch(() => setLoading(false))
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (mahalluId) fetchFamilies() }, [mahalluId, page, search])
 
   const addMember = () => {

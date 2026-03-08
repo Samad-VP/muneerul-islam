@@ -12,7 +12,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       include: { members: true }
     })
     return NextResponse.json(committee)
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -25,7 +25,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     })
     await prisma.committee.delete({ where: { id: params.id } })
     return NextResponse.json({ message: "Committee deleted successfully" })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

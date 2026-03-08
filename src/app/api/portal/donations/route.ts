@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 
-export async function GET(req: Request) {
+export async function GET(_req: Request) {
   try {
     const session = await getServerSession(authOptions)
     if (!session || !session.user?.familyId) {
@@ -28,8 +28,8 @@ export async function GET(req: Request) {
        totalPaid: donations.filter(d => d.status === 'PAID').reduce((sum, curr) => sum + curr.amount, 0),
        totalPending: monthlyDues.filter(d => d.status === 'PENDING').reduce((sum, curr) => sum + curr.amount, 0)
     })
-  } catch (error) {
-    console.error("Error fetching portal donations:", error)
+  } catch (_err) {
+    console.error("Error fetching portal donations:", _err)
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }

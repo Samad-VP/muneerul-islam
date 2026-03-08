@@ -32,6 +32,7 @@ export default function CommitteesPage() {
       .catch(() => setLoading(false))
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (mahalluId) fetchCommittees() }, [mahalluId])
 
   const createCommittee = async (e: React.FormEvent) => {

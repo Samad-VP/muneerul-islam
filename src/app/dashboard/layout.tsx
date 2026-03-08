@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import {
   PiSquaresFour, PiUsers, PiHouse, PiUserCheck, PiCalendarBlank,
@@ -51,8 +52,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Logo */}
         <div className="p-6 border-b border-border-color flex items-center justify-between lg:justify-start">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 border border-emerald-500/30 rounded-xl flex items-center justify-center text-xl shadow-inner">
-              🕌
+            <div className="w-10 h-10 border border-emerald-500/30 rounded-full flex items-center justify-center text-xl shadow-inner overflow-hidden bg-white shrink-0">
+              <Image src="/logo.png" alt="Muneerul Islam Logo" width={40} height={40} className="w-full h-full object-contain" />
             </div>
             <div>
               <h2 className="text-base font-bold text-text-primary leading-tight">Muneerul Islam</h2>

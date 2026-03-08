@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
-import { PiSignOut, PiHouse, PiWallet } from "react-icons/pi"
+import Image from "next/image"
+import { PiSignOut, PiHouse } from "react-icons/pi"
 import { signOut } from "next-auth/react"
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {
@@ -13,8 +14,8 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
       {/* Top Navigation */}
       <header className="sticky top-0 z-30 bg-bg-card/80 backdrop-blur-md border-b border-border-color px-4 sm:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-emerald-500/20 to-emerald-500/5 border border-emerald-500/30 rounded-xl flex items-center justify-center text-xl shadow-inner">
-            🕌
+          <div className="w-10 h-10 border border-emerald-500/30 rounded-full flex items-center justify-center text-xl shadow-inner overflow-hidden bg-white shrink-0">
+            <Image src="/logo.png" alt="Muneerul Islam Logo" width={40} height={40} className="w-full h-full object-contain" />
           </div>
           <div>
             <h2 className="text-base font-bold text-text-primary leading-tight">Family Portal</h2>

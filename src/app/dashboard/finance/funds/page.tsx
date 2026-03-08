@@ -25,8 +25,8 @@ export default function FundsPage() {
       const res = await fetch("/api/finance/funds")
       const data = await res.json()
       if (res.ok) setFunds(data)
-    } catch (error) {
-      console.error("Failed to fetch funds", error)
+    } catch (_err) {
+      console.error("Failed to fetch funds", _err)
     } finally {
       setLoading(false)
     }
@@ -50,7 +50,7 @@ export default function FundsPage() {
         setName("")
         setDescription("")
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to create fund")
     }
   }

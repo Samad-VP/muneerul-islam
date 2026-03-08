@@ -30,8 +30,8 @@ export default function ExpensesPage() {
         setFunds(fData)
         if (fData.length > 0) setFundId(fData[0].id)
       }
-    } catch (error) {
-      console.error("Failed to fetch data", error)
+    } catch (_err) {
+      console.error("Failed to fetch data", _err)
     } finally {
       setLoading(false)
     }
@@ -54,7 +54,7 @@ export default function ExpensesPage() {
         setAmount("")
         setDescription("")
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to request expense")
     }
   }
@@ -73,7 +73,7 @@ export default function ExpensesPage() {
         const err = await res.json()
         alert(err.error || "Failed to update status")
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to update status")
     }
   }

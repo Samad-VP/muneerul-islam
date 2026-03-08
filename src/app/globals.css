@@ -5,6 +5,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap");
 
 :root {
+  /* Warm Eye-Care Light Mode Variables */
   --emerald-50: #ecfdf5;
   --emerald-100: #d1fae5;
   --emerald-200: #a7f3d0;
@@ -15,6 +16,21 @@
   --emerald-700: #047857;
   --emerald-800: #065f46;
   --emerald-900: #064e3b;
+  
+  --bg-primary: #fdfbf7; /* Warm off-white */
+  --bg-secondary: #f4f1ea; /* Soft warm gray/beige blend */
+  --bg-card: #ffffff;
+  --bg-card-hover: #faf9f6;
+  --border-color: #e8e3d9;
+  
+  --text-primary: #1f2937; /* Deep charcoal */
+  --text-secondary: #059669; /* Emerald 600 - Theme matching color */
+  --text-muted: #10b981; /* Emerald 500 - Lighter theme matching color */
+  --gold: #f59e0b;
+}
+
+.dark {
+  /* Islamic Deep Dark Theme Variables */
   --bg-primary: #0a0f1a;
   --bg-secondary: #111827;
   --bg-card: #1a2332;
@@ -23,7 +39,6 @@
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --gold: #f59e0b;
 }
 
 * {
@@ -59,12 +74,16 @@ body {
 
 /* Glass card */
 .glass-card {
-  background: rgba(26, 35, 50, 0.8);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(42, 58, 74, 0.5);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   transition: all 0.3s ease;
+}
+.dark .glass-card {
+  background: rgba(26, 35, 50, 0.8);
+  border-color: rgba(42, 58, 74, 0.5);
 }
 .glass-card:hover {
   border-color: rgba(16, 185, 129, 0.3);

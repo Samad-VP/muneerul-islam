@@ -1,11 +1,12 @@
 "use client"
 import { PiUserDuotone, PiPhoneCallDuotone, PiEnvelopeDuotone, PiShieldCheckBold } from "react-icons/pi"
 import { useLanguage } from "@/context/LanguageContext"
+import Image from "next/image"
 
 const committeeMembers = [
-  { name: "Ahmed Abdullah", role: "President", phone: "+91 98765 43210", email: "president@muneerulislam.org" },
-  { name: "Mohammed Zakariya", role: "Secretary", phone: "+91 98765 43211", email: "secretary@muneerulislam.org" },
-  { name: "Ibrahim Khalid", role: "Treasurer", phone: "+91 98765 43212", email: "treasurer@muneerulislam.org" },
+  { name: "Ahmed Abdullah", role: "President", phone: "+91 98765 43210", email: "president@muneerulislam.org", image: "/images/committee/president.jpg" },
+  { name: "Mohammed Zakariya", role: "Secretary", phone: "+91 98765 43211", email: "secretary@muneerulislam.org", image: "/images/committee/secretary.jpg" },
+  { name: "Ibrahim Khalid", role: "Treasurer", phone: "+91 98765 43212", email: "treasurer@muneerulislam.org", image: "/images/committee/treasurer.jpg" },
   { name: "Yousuf Hasan", role: "Vice President", phone: "+91 98765 43213", email: "vp@muneerulislam.org" },
   { name: "Zaid Ali", role: "Joint Secretary", phone: "+91 98765 43214", email: "js@muneerulislam.org" },
   { name: "Omar Farooq", role: "Executive Member", phone: "+91 98765 43215", email: "member1@muneerulislam.org" },
@@ -36,8 +37,12 @@ export default function CommitteePage() {
               key={member.name} 
               className={`glass-card p-6 sm:p-8 animate-fade-in stagger-${(idx % 3) + 1} flex flex-col items-center sm:items-start text-center sm:text-left hover:shadow-lg transition-all border border-border-color hover:border-emerald-500/30 group`}
             >
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-5 sm:mb-6 group-hover:scale-110 transition-transform">
-                <PiUserDuotone size={32} />
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-5 sm:mb-6 group-hover:scale-110 transition-transform overflow-hidden shadow-sm relative">
+                {member.image ? (
+                  <Image src={member.image} alt={member.name} fill className="object-cover object-top" />
+                ) : (
+                  <PiUserDuotone size={40} className="text-emerald-500" />
+                )}
               </div>
               <h3 className="text-lg sm:text-xl font-extrabold text-text-primary mb-1">{member.name}</h3>
               <p className="text-emerald-500 text-xs sm:text-sm font-bold mb-5 sm:mb-6 uppercase tracking-wider">{member.role}</p>

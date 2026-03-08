@@ -81,8 +81,8 @@ export async function GET() {
       },
       recentFamilies,
     })
-  } catch (error) {
-    console.error(error)
+  } catch (_err) {
+    console.error(_err)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

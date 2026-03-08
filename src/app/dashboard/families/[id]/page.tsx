@@ -1,10 +1,10 @@
 "use client"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Link from "next/link"
 import {
   PiArrowLeftBold, PiUsersDuotone, PiPhoneCallDuotone, PiMapPinDuotone, PiHashBold, PiPlusBold, PiXBold, PiSpinner,
-  PiUserDuotone, PiCalendarDuotone, PiDropDuotone, PiGraduationCapDuotone, PiBriefcaseDuotone, PiGlobeDuotone, PiPencilSimpleLineDuotone
+  PiCalendarDuotone, PiDropDuotone, PiGraduationCapDuotone, PiBriefcaseDuotone, PiGlobeDuotone, PiPencilSimpleLineDuotone
 } from "react-icons/pi"
 
 export default function FamilyDetailPage() {
@@ -29,15 +29,15 @@ export default function FamilyDetailPage() {
   const [showEditMember, setShowEditMember] = useState(false)
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null)
 
-  const fetchFamily = () => {
+  const fetchFamily = useCallback(() => {
     setLoading(true)
     fetch(`/api/families/${params.id}`)
       .then(res => res.json())
       .then(data => { setFamily(data); setLoading(false) })
       .catch(() => setLoading(false))
-  }
+  }, [params.id])
 
-  useEffect(() => { fetchFamily() }, [params.id])
+  useEffect(() => { fetchFamily() }, [fetchFamily])
 
   const openEditFamily = () => {
     if (family) {
@@ -182,7 +182,7 @@ export default function FamilyDetailPage() {
 
       {/* Members Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
-        {family.members?.map((member: any, idx: number) => (
+        {family.members?.map((member: any) => (
           <div key={member.id} className="glass-card p-5 sm:p-6 hover:shadow-lg transition-all border border-border-color hover:border-emerald-500/30 group w-full">
             <div className="flex justify-between items-start mb-5 w-full">
               <div className="flex items-center gap-3 sm:gap-4">

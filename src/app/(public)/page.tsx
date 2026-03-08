@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link"
+import Image from "next/image"
 import { PiArrowRightBold, PiUsersDuotone, PiCalendarDuotone, PiSpeakerHighDuotone, PiFileTextDuotone } from "react-icons/pi"
 import { useLanguage } from "@/context/LanguageContext"
 
@@ -51,37 +52,41 @@ export default function HomePage() {
       {/* Features/Stats Section */}
       <section className="py-16 sm:py-24 bg-bg-secondary relative w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-5 sm:mb-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(16,185,129,0.15)] hover:border-emerald-500/30 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/0 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 mb-5 sm:mb-6 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all duration-300 relative z-10">
                 <PiUsersDuotone size={28} />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-emerald-400">500+</h3>
-              <p className="text-text-secondary text-xs sm:text-sm font-medium">{t("stats.families")}</p>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-emerald-400 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_8px_rgba(52,211,153,0.5)] transition-all duration-300 relative z-10">500+</h3>
+              <p className="text-text-secondary text-xs sm:text-sm font-medium relative z-10 group-hover:text-text-primary transition-colors">{t("stats.families")}</p>
             </div>
             
-            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 mb-5 sm:mb-6">
+            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(59,130,246,0.15)] hover:border-blue-500/30 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-500/0 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 mb-5 sm:mb-6 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-300 relative z-10">
                 <PiCalendarDuotone size={28} />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-blue-400">12+</h3>
-              <p className="text-text-secondary text-xs sm:text-sm font-medium">{t("stats.events")}</p>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-blue-400 group-hover:text-blue-300 group-hover:drop-shadow-[0_0_8px_rgba(96,165,250,0.5)] transition-all duration-300 relative z-10">12+</h3>
+              <p className="text-text-secondary text-xs sm:text-sm font-medium relative z-10 group-hover:text-text-primary transition-colors">{t("stats.events")}</p>
             </div>
             
-            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gold/10 flex items-center justify-center text-gold mb-5 sm:mb-6">
+            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(250,204,21,0.15)] hover:border-gold/30 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-gold/0 to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gold/10 flex items-center justify-center text-gold mb-5 sm:mb-6 group-hover:scale-110 group-hover:bg-gold/20 transition-all duration-300 relative z-10">
                 <PiSpeakerHighDuotone size={28} />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-gold">24/7</h3>
-              <p className="text-text-secondary text-xs sm:text-sm font-medium">{t("stats.announcements")}</p>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-gold group-hover:drop-shadow-[0_0_8px_rgba(250,204,21,0.5)] transition-all duration-300 relative z-10">24/7</h3>
+              <p className="text-text-secondary text-xs sm:text-sm font-medium relative z-10 group-hover:text-text-primary transition-colors">{t("stats.announcements")}</p>
             </div>
             
-            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 mb-5 sm:mb-6">
+            <div className="glass-card p-6 sm:p-8 text-center flex flex-col items-center group hover:-translate-y-2 hover:shadow-[0_8px_30px_rgb(168,85,247,0.15)] hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-500/0 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-500 mb-5 sm:mb-6 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-300 relative z-10">
                 <PiFileTextDuotone size={28} />
               </div>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-purple-400">100%</h3>
-              <p className="text-text-secondary text-xs sm:text-sm font-medium">{t("stats.reports")}</p>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-1 sm:mb-2 text-purple-400 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_8px_rgba(192,132,252,0.5)] transition-all duration-300 relative z-10">100%</h3>
+              <p className="text-text-secondary text-xs sm:text-sm font-medium relative z-10 group-hover:text-text-primary transition-colors">{t("stats.reports")}</p>
             </div>
           </div>
         </div>
@@ -112,10 +117,10 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="relative mt-8 lg:mt-0 px-4 sm:px-0">
-            <div className="glass-card overflow-hidden aspect-video relative group w-full rounded-2xl sm:rounded-3xl border border-emerald-500/20 hover:border-emerald-500/40 transition-colors">
+            <div className="glass-card overflow-hidden aspect-video relative group w-full rounded-2xl sm:rounded-3xl border border-emerald-500/20 hover:border-emerald-500/40 transition-colors bg-white">
               <div className="absolute inset-0 bg-emerald-500/5 group-hover:bg-emerald-500/10 transition-colors" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl sm:text-7xl drop-shadow-lg">🕌</span>
+              <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-12">
+                <Image src="/logo.png" alt="Muneerul Islam Logo" fill className="object-contain" />
               </div>
             </div>
             <div className="absolute -bottom-4 sm:-bottom-6 -right-2 sm:-right-6 glass-card p-4 sm:p-6 border-emerald-500/30 animate-pulse-glow hidden sm:block">

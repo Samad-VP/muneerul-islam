@@ -27,8 +27,8 @@ export default function IncomesPage() {
         setFunds(fData)
         if (fData.length > 0) setFundId(fData[0].id)
       }
-    } catch (error) {
-      console.error("Failed to fetch data", error)
+    } catch (_err) {
+      console.error("Failed to fetch data", _err)
     } finally {
       setLoading(false)
     }
@@ -50,7 +50,7 @@ export default function IncomesPage() {
         setAmount("")
         setNotes("")
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to record income")
     }
   }
@@ -69,7 +69,7 @@ export default function IncomesPage() {
         alert(data.message)
         fetchData()
       }
-    } catch (error) {
+    } catch {
       console.error("Failed to generate dues")
     }
   }

@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { PiMagnifyingGlass, PiUsersDuotone, PiFadersDuotone, PiSpinner, PiGlobeDuotone, PiDropDuotone, PiGraduationCapDuotone, PiBriefcaseDuotone } from "react-icons/pi"
+import { PiMagnifyingGlass, PiUsersDuotone, PiFadersDuotone, PiSpinner, PiGlobeDuotone } from "react-icons/pi"
 
 export default function MembersPage() {
   const [members, setMembers] = useState<any[]>([])
@@ -29,6 +29,7 @@ export default function MembersPage() {
       .catch(() => setLoading(false))
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchMembers() }, [search, page, filters])
 
   return (

@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     })
 
     return NextResponse.json(assignment, { status: 201 })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
@@ -47,7 +47,7 @@ export async function DELETE(request: Request) {
     })
 
     return NextResponse.json({ message: "Member removed from committee" })
-  } catch (error) {
+  } catch (_err) {
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }
