@@ -166,7 +166,7 @@ export default function EventsPage() {
                 <div className="flex flex-col gap-5">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Event Title *</label>
-                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Event title" />
+                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Enter event title..." />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
@@ -187,11 +187,11 @@ export default function EventsPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Venue</label>
-                    <input className="input-field w-full" value={form.venue} onChange={e => setForm({...form, venue: e.target.value})} placeholder="Event venue" />
+                    <input className="input-field w-full" value={form.venue} onChange={e => setForm({...form, venue: e.target.value})} placeholder="Enter location or platform..." />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Description</label>
-                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Event description" />
+                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Provide event details..." />
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">
@@ -219,7 +219,7 @@ export default function EventsPage() {
                 <div className="flex flex-col gap-5">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Event Title *</label>
-                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Event title" />
+                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Enter event title..." />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
@@ -240,11 +240,11 @@ export default function EventsPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Venue</label>
-                    <input className="input-field w-full" value={form.venue} onChange={e => setForm({...form, venue: e.target.value})} placeholder="Event venue" />
+                    <input className="input-field w-full" value={form.venue} onChange={e => setForm({...form, venue: e.target.value})} placeholder="Enter location or platform..." />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Description</label>
-                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Event description" />
+                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Provide event details..." />
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">

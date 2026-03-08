@@ -57,14 +57,14 @@ export default function FundsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-text-primary">Funds</h1>
           <p className="text-sm text-text-muted mt-1">Manage general and special funds</p>
         </div>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="btn btn-primary flex items-center gap-2"
+          className="btn btn-primary w-full sm:w-auto justify-center flex items-center gap-2"
         >
           <PiPlus size={18} />
           <span>New Fund</span>
@@ -110,7 +110,7 @@ export default function FundsPage() {
               <form id="fundForm" onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Fund Name</label>
-                  <input type="text" required value={name} onChange={e => setName(e.target.value)} className="input-field w-full" placeholder="e.g., Ramadan Relief Fund" />
+                  <input type="text" required value={name} onChange={e => setName(e.target.value)} className="input-field w-full" placeholder="Enter fund name..." />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Type</label>
@@ -121,14 +121,14 @@ export default function FundsPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Description</label>
-                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3}></textarea>
+                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3} placeholder="Provide details about the purpose of this fund..."></textarea>
                 </div>
               </form>
             </div>
             
-            <div className="p-4 border-t border-border-color flex justify-end gap-3 bg-bg-secondary/50">
-              <button onClick={() => setIsModalOpen(false)} className="btn bg-bg-secondary border border-border-color text-text-primary hover:bg-bg-tertiary">Cancel</button>
-              <button type="submit" form="fundForm" className="btn btn-primary">Create Fund</button>
+            <div className="p-4 border-t border-border-color flex flex-col sm:flex-row justify-end gap-3 bg-bg-secondary/50">
+              <button type="button" onClick={() => setIsModalOpen(false)} className="btn w-full sm:w-auto justify-center bg-transparent border border-border-color text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Cancel</button>
+              <button type="submit" form="fundForm" className="btn btn-primary w-full sm:w-auto justify-center">Create Fund</button>
             </div>
           </div>
         </div>

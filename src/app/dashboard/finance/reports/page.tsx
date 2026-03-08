@@ -91,12 +91,12 @@ export default function FinanceReportsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-text-primary">Finance Reports</h1>
           <p className="text-sm text-text-muted mt-1">Analytics and financial statement generation</p>
         </div>
-        <button onClick={exportAnnualStatement} className="btn bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2">
+        <button onClick={exportAnnualStatement} className="btn w-full sm:w-auto justify-center bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-2">
           <PiDownloadSimple size={18} />
           <span>Export PDF Statement</span>
         </button>

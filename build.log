@@ -1,0 +1,77 @@
+
+> muneerul-islam@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/31) ...
+   Generating static pages (7/31) 
+   Generating static pages (15/31) 
+   Generating static pages (23/31) 
+ ✓ Generating static pages (31/31)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /                                    6.3 kB          119 kB
+├ ○ /_not-found                          880 B          88.8 kB
+├ ○ /about                               6.03 kB         104 kB
+├ ƒ /api/announcements                   0 B                0 B
+├ ƒ /api/announcements/[id]              0 B                0 B
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ƒ /api/auth/register                   0 B                0 B
+├ ƒ /api/committees                      0 B                0 B
+├ ƒ /api/committees/[id]                 0 B                0 B
+├ ƒ /api/committees/members              0 B                0 B
+├ ƒ /api/events                          0 B                0 B
+├ ƒ /api/events/[id]                     0 B                0 B
+├ ƒ /api/families                        0 B                0 B
+├ ƒ /api/families/[id]                   0 B                0 B
+├ ƒ /api/finance/audit                   0 B                0 B
+├ ƒ /api/finance/expenses                0 B                0 B
+├ ƒ /api/finance/expenses/[id]           0 B                0 B
+├ ƒ /api/finance/funds                   0 B                0 B
+├ ƒ /api/finance/incomes                 0 B                0 B
+├ ƒ /api/finance/incomes/generate        0 B                0 B
+├ ƒ /api/finance/reports                 0 B                0 B
+├ ƒ /api/health                          0 B                0 B
+├ ƒ /api/mahallu                         0 B                0 B
+├ ƒ /api/members                         0 B                0 B
+├ ƒ /api/members/[id]                    0 B                0 B
+├ ƒ /api/portal/donations                0 B                0 B
+├ ƒ /api/portal/family                   0 B                0 B
+├ ƒ /api/reports                         0 B                0 B
+├ ƒ /committee                           7.14 kB         110 kB
+├ ○ /contact                             6.3 kB          104 kB
+├ ○ /dashboard                           15.3 kB         221 kB
+├ ○ /dashboard/announcements             3.66 kB         101 kB
+├ ○ /dashboard/committees                4.16 kB         102 kB
+├ ○ /dashboard/events                    3.87 kB         101 kB
+├ ○ /dashboard/families                  3.74 kB         111 kB
+├ ƒ /dashboard/families/[id]             3.66 kB         111 kB
+├ ○ /dashboard/finance/expenses          3.85 kB         111 kB
+├ ○ /dashboard/finance/funds             2.69 kB         100 kB
+├ ○ /dashboard/finance/incomes           3.66 kB         101 kB
+├ ○ /dashboard/finance/reports           7.66 kB         342 kB
+├ ○ /dashboard/members                   3.37 kB         101 kB
+├ ○ /dashboard/reports                   2.91 kB         101 kB
+├ ○ /dashboard/settings                  2.69 kB         100 kB
+├ ○ /gallery                             5.12 kB        93.1 kB
+├ ○ /login                               3.31 kB         106 kB
+└ ○ /portal                              2.74 kB         239 kB
++ First Load JS shared by all            88 kB
+  ├ chunks/117-9466dd3c0db5869b.js       32 kB
+  ├ chunks/fd9d1056-188df4eb4f4176ca.js  53.8 kB
+  └ other shared chunks (total)          2.11 kB
+
+
+ƒ Middleware                             49.4 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -300,7 +300,7 @@ export default function CommitteesPage() {
                 <div className="flex flex-col gap-5">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Name *</label>
-                    <input className="input-field w-full" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Committee name" />
+                    <input className="input-field w-full" required value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="Enter committee name..." />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Type *</label>
@@ -317,7 +317,7 @@ export default function CommitteesPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Description</label>
-                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Description" />
+                    <textarea className="input-field w-full" rows={3} value={form.description} onChange={e => setForm({...form, description: e.target.value})} placeholder="Provide details about the committee's purpose..." />
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">

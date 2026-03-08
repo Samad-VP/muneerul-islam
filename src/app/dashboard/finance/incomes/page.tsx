@@ -76,17 +76,17 @@ export default function IncomesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-text-primary">Incomes & Dues</h1>
           <p className="text-sm text-text-muted mt-1">Manage family dues and special donations</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button onClick={handleGenerateDues} className="btn bg-bg-secondary border border-border-color text-text-primary hover:bg-bg-tertiary flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <button onClick={handleGenerateDues} className="btn w-full sm:w-auto justify-center bg-bg-secondary border border-border-color text-text-primary hover:bg-bg-tertiary flex items-center gap-2">
             <PiArrowsClockwise size={18} />
             <span>Generate Dues</span>
           </button>
-          <button onClick={() => setIsRecordModalOpen(true)} className="btn btn-primary flex items-center gap-2">
+          <button onClick={() => setIsRecordModalOpen(true)} className="btn btn-primary w-full sm:w-auto justify-center flex items-center gap-2">
             <PiPlus size={18} />
             <span>Record Income</span>
           </button>
@@ -207,18 +207,18 @@ export default function IncomesPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Amount (₹) <span className="text-red-500">*</span></label>
-                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="e.g., 1000" />
+                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="0.00" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Notes / Description</label>
-                  <textarea value={notes} onChange={e => setNotes(e.target.value)} className="input-field w-full" rows={3} placeholder="Optional details..."></textarea>
+                  <textarea value={notes} onChange={e => setNotes(e.target.value)} className="input-field w-full" rows={3} placeholder="Enter transaction details or reference..."></textarea>
                 </div>
               </form>
             </div>
             
-            <div className="p-4 border-t border-border-color flex justify-end gap-3 bg-bg-secondary/50">
-              <button onClick={() => setIsRecordModalOpen(false)} className="btn bg-bg-secondary border border-border-color text-text-primary hover:bg-bg-tertiary">Cancel</button>
-              <button type="submit" form="recordForm" className="btn btn-primary flex items-center gap-2">
+            <div className="p-4 border-t border-border-color flex flex-col sm:flex-row justify-end gap-3 bg-bg-secondary/50">
+              <button type="button" onClick={() => setIsRecordModalOpen(false)} className="btn w-full sm:w-auto justify-center bg-transparent border border-border-color text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Cancel</button>
+              <button type="submit" form="recordForm" className="btn btn-primary w-full sm:w-auto justify-center flex items-center gap-2">
                 <PiReceipt size={18} />
                 Save Receipt
               </button>

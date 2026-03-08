@@ -160,7 +160,7 @@ export default function AnnouncementsPage() {
                 <div className="flex flex-col gap-5">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Title *</label>
-                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Announcement title" />
+                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Enter announcement title..." />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Priority</label>
@@ -173,7 +173,7 @@ export default function AnnouncementsPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Content *</label>
-                    <textarea className="input-field w-full" rows={5} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} placeholder="Announcement content" />
+                    <textarea className="input-field w-full" rows={5} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} placeholder="Write the full announcement here..." />
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">
@@ -202,7 +202,7 @@ export default function AnnouncementsPage() {
                 <div className="flex flex-col gap-5">
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Title *</label>
-                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Announcement title" />
+                    <input className="input-field w-full" required value={form.title} onChange={e => setForm({...form, title: e.target.value})} placeholder="Enter announcement title..." />
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Priority</label>
@@ -215,7 +215,7 @@ export default function AnnouncementsPage() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Content *</label>
-                    <textarea className="input-field w-full" rows={5} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} placeholder="Announcement content" />
+                    <textarea className="input-field w-full" rows={5} required value={form.content} onChange={e => setForm({...form, content: e.target.value})} placeholder="Write the full announcement here..." />
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3 justify-end mt-8 pt-6 border-t border-border-color">

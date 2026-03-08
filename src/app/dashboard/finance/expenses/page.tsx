@@ -83,12 +83,12 @@ export default function ExpensesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 w-full">
         <div>
           <h1 className="text-2xl font-bold text-text-primary">Expenses & Approvals</h1>
           <p className="text-sm text-text-muted mt-1">Request and manage fund expenditures</p>
         </div>
-        <button onClick={() => setIsRequestModalOpen(true)} className="btn btn-primary flex items-center gap-2">
+        <button onClick={() => setIsRequestModalOpen(true)} className="btn btn-primary w-full sm:w-auto justify-center flex items-center gap-2">
           <PiPlus size={18} />
           <span>Request Expense</span>
         </button>
@@ -231,7 +231,7 @@ export default function ExpensesPage() {
               <form id="requestForm" onSubmit={handleRequestSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Expense Title <span className="text-red-500">*</span></label>
-                  <input type="text" required value={title} onChange={e => setTitle(e.target.value)} className="input-field w-full" placeholder="e.g., Electricity Bill" />
+                  <input type="text" required value={title} onChange={e => setTitle(e.target.value)} className="input-field w-full" placeholder="Enter expense title..." />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Target Fund <span className="text-red-500">*</span></label>
@@ -241,18 +241,18 @@ export default function ExpensesPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Amount (₹) <span className="text-red-500">*</span></label>
-                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="e.g., 500" />
+                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="0.00" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Description / Justification</label>
-                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3}></textarea>
+                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3} placeholder="Provide justification or add notes..."></textarea>
                 </div>
               </form>
             </div>
             
-            <div className="p-4 border-t border-border-color flex justify-end gap-3 bg-bg-secondary/50">
-              <button onClick={() => setIsRequestModalOpen(false)} className="btn bg-bg-secondary border border-border-color text-text-primary hover:bg-bg-tertiary">Cancel</button>
-              <button type="submit" form="requestForm" className="btn btn-primary flex items-center gap-2">
+            <div className="p-4 border-t border-border-color flex flex-col sm:flex-row justify-end gap-3 bg-bg-secondary/50">
+              <button type="button" onClick={() => setIsRequestModalOpen(false)} className="btn w-full sm:w-auto justify-center bg-transparent border border-border-color text-text-secondary hover:bg-bg-secondary hover:text-text-primary">Cancel</button>
+              <button type="submit" form="requestForm" className="btn btn-primary w-full sm:w-auto justify-center flex items-center gap-2">
                 <PiPaperPlaneRight size={18} />
                 Submit Request
               </button>

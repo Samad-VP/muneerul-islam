@@ -7,227 +7,201 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─── Authentication ─────────────────────────────────────────
 model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      String   @default("admin") // admin, editor, viewer, super_admin, president, treasurer, secretary, data_entry, family_head
-  avatar    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  familyId  String?
-  family    Family?  @relation(fields: [familyId], references: [id], onDelete: SetNull)
-
-  expensesRequested Expense[] @relation("RequestedExpenses")
-  expensesApproved  Expense[] @relation("ApprovedExpenses")
+  id                String     @id @default(cuid())
+  name              String
+  email             String     @unique
+  password          String
+  role              String     @default("admin")
+  avatar            String?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  familyId          String?
   auditLogs         AuditLog[]
+  expensesApproved  Expense[]  @relation("ApprovedExpenses")
+  expensesRequested Expense[]  @relation("RequestedExpenses")
+  family            Family?    @relation(fields: [familyId], references: [id])
 }
 
-// ─── Mahallu (Mosque Unit) ──────────────────────────────────
 model Mahallu {
-  id          String   @id @default(cuid())
-  name        String
-  arabicName  String?
-  address     String?
-  district    String?
-  panchayat   String?
-  pincode     String?
-  phone       String?
-  email       String?
-  president   String?
-  secretary   String?
-  imam        String?
-  established String?
-  logo        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  families   Family[]
-  committees Committee[]
-  events     Event[]
+  id            String         @id @default(cuid())
+  name          String
+  arabicName    String?
+  address       String?
+  district      String?
+  panchayat     String?
+  pincode       String?
+  phone         String?
+  email         String?
+  president     String?
+  secretary     String?
+  imam          String?
+  established   String?
+  logo          String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   announcements Announcement[]
+  committees    Committee[]
+  events        Event[]
+  families      Family[]
 }
 
-// ─── Family Unit ────────────────────────────────────────────
 model Family {
-  id            String   @id @default(cuid())
-  familyNumber  String   @unique
-  houseName     String
-  houseNumber   String?
-  address       String?
-  ward          String?
-  phone         String?
-  rationCardNo  String?
-  annualIncome  String?
-  monthlyDueAmount Float @default(0)
-  isActive      Boolean  @default(true)
-  notes         String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  mahalluId String
-  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
-
-  members Member[]
-  users   User[]
-  incomes Income[]
+  id               String   @id @default(cuid())
+  familyNumber     String   @unique
+  houseName        String
+  houseNumber      String?
+  address          String?
+  ward             String?
+  phone            String?
+  rationCardNo     String?
+  annualIncome     String?
+  monthlyDueAmount Float    @default(0)
+  isActive         Boolean  @default(true)
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  mahalluId        String
+  mahallu          Mahallu  @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+  incomes          Income[]
+  members          Member[]
+  users            User[]
 
   @@index([mahalluId])
   @@index([familyNumber])
 }
 
-// ─── Individual Member ──────────────────────────────────────
 model Member {
-  id             String   @id @default(cuid())
-  name           String
-  arabicName     String?
-  relationToHead String   // Head, Spouse, Son, Daughter, Father, Mother, etc.
-  gender         String   // Male, Female
-  dob            DateTime?
-  age            Int?
-  maritalStatus  String?  // Single, Married, Widowed, Divorced
-  phone          String?
-  email          String?
-  bloodGroup     String?
-  education      String?
-  educationDetail String?
-  occupation     String?
-  occupationDetail String?
-  monthlyIncome  String?
-  abroad         Boolean  @default(false)
-  abroadCountry  String?
-  healthIssues   String?
-  disabilities   String?
-  isAlive        Boolean  @default(true)
-  isVoter        Boolean  @default(false)
-  voterIdNo      String?
-  aadhaarNo      String?
-  photo          String?
-  remarks        String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-
-  familyId String
-  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
-
+  id                   String            @id @default(cuid())
+  name                 String
+  arabicName           String?
+  relationToHead       String
+  gender               String
+  dob                  DateTime?
+  age                  Int?
+  maritalStatus        String?
+  phone                String?
+  email                String?
+  bloodGroup           String?
+  education            String?
+  educationDetail      String?
+  occupation           String?
+  occupationDetail     String?
+  monthlyIncome        String?
+  abroad               Boolean           @default(false)
+  abroadCountry        String?
+  healthIssues         String?
+  disabilities         String?
+  isAlive              Boolean           @default(true)
+  isVoter              Boolean           @default(false)
+  voterIdNo            String?
+  aadhaarNo            String?
+  photo                String?
+  remarks              String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  familyId             String
   committeeMemberships CommitteeMember[]
   incomes              Income[]
+  family               Family            @relation(fields: [familyId], references: [id], onDelete: Cascade)
 
   @@index([familyId])
   @@index([name])
 }
 
-// ─── Committee ──────────────────────────────────────────────
 model Committee {
-  id          String   @id @default(cuid())
+  id          String            @id @default(cuid())
   name        String
   description String?
-  type        String   // Education, Welfare, Youth, Women, Finance, Maintenance, etc.
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  mahalluId String
-  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
-
-  members CommitteeMember[]
+  type        String
+  isActive    Boolean           @default(true)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  mahalluId   String
+  mahallu     Mahallu           @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+  members     CommitteeMember[]
 
   @@index([mahalluId])
 }
 
-// ─── Committee Member (Junction) ────────────────────────────
 model CommitteeMember {
-  id        String   @id @default(cuid())
-  role      String   @default("member") // president, secretary, treasurer, member
-  joinedAt  DateTime @default(now())
-  leftAt    DateTime?
-  isActive  Boolean  @default(true)
-
+  id          String    @id @default(cuid())
+  role        String    @default("member")
+  joinedAt    DateTime  @default(now())
+  leftAt      DateTime?
+  isActive    Boolean   @default(true)
   memberId    String
-  member      Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
   committeeId String
   committee   Committee @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+  member      Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   @@unique([memberId, committeeId])
   @@index([memberId])
   @@index([committeeId])
 }
 
-// ─── Events / Programs ─────────────────────────────────────
 model Event {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   description String?
   date        DateTime
   endDate     DateTime?
   venue       String?
-  type        String?  // Meeting, Class, Charity, Festival, etc.
-  status      String   @default("upcoming") // upcoming, ongoing, completed, cancelled
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  mahalluId String
-  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+  type        String?
+  status      String    @default("upcoming")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  mahalluId   String
+  mahallu     Mahallu   @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
 
   @@index([mahalluId])
 }
 
-// ─── Announcements ──────────────────────────────────────────
 model Announcement {
   id        String   @id @default(cuid())
   title     String
   content   String
-  priority  String   @default("normal") // low, normal, high, urgent
+  priority  String   @default("normal")
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   mahalluId String
-  mahallu   Mahallu @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
+  mahallu   Mahallu  @relation(fields: [mahalluId], references: [id], onDelete: Cascade)
 
   @@index([mahalluId])
 }
 
-// ─── Finance Module ─────────────────────────────────────────
-
 model Fund {
-  id          String   @id @default(cuid())
-  name        String   @unique // General Fund, Ramadan Fund, etc.
-  type        String   @default("general") // general, special
+  id          String    @id @default(cuid())
+  name        String    @unique
+  type        String    @default("general")
   description String?
-  balance     Float    @default(0)
-  isDefault   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  incomes  Income[]
-  expenses Expense[]
+  balance     Float     @default(0)
+  isDefault   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  expenses    Expense[]
+  incomes     Income[]
 }
 
 model Income {
-  id           String   @id @default(cuid())
-  receiptNo    String   @unique
+  id           String    @id @default(cuid())
+  receiptNo    String    @unique
   amount       Float
-  isMonthlyDue Boolean  @default(false)
-  month        Int?     // 1-12
+  isMonthlyDue Boolean   @default(false)
+  month        Int?
   year         Int?
-  status       String   @default("PAID") // PENDING, PAID, REVERSED, PARTIAL
+  status       String    @default("PAID")
   notes        String?
   paidAt       DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   fundId       String
-  fund         Fund     @relation(fields: [fundId], references: [id])
-
   familyId     String?
-  family       Family?  @relation(fields: [familyId], references: [id], onDelete: SetNull)
-
   memberId     String?
-  member       Member?  @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  family       Family?   @relation(fields: [familyId], references: [id])
+  fund         Fund      @relation(fields: [fundId], references: [id])
+  member       Member?   @relation(fields: [memberId], references: [id])
 
   @@index([fundId])
   @@index([familyId])
@@ -235,39 +209,35 @@ model Income {
 }
 
 model Expense {
-  id          String   @id @default(cuid())
-  voucherNo   String   @unique
-  title       String
-  description String?
-  amount      Float
-  status      String   @default("PENDING_APPROVAL") // PENDING_APPROVAL, APPROVED, REJECTED, PAID, REVERSED
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  fundId      String
-  fund        Fund     @relation(fields: [fundId], references: [id])
-
+  id            String   @id @default(cuid())
+  voucherNo     String   @unique
+  title         String
+  description   String?
+  amount        Float
+  status        String   @default("PENDING_APPROVAL")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  fundId        String
   requestedById String
-  requestedBy   User     @relation("RequestedExpenses", fields: [requestedById], references: [id])
-
   approvedById  String?
   approvedBy    User?    @relation("ApprovedExpenses", fields: [approvedById], references: [id])
+  fund          Fund     @relation(fields: [fundId], references: [id])
+  requestedBy   User     @relation("RequestedExpenses", fields: [requestedById], references: [id])
 
   @@index([fundId])
   @@index([status])
 }
 
 model AuditLog {
-  id          String   @id @default(cuid())
-  action      String   // CREATE, UPDATE, DELETE, APPROVE, REVERSE
-  entityType  String   // Income, Expense, Fund
-  entityId    String
-  oldData     String?  // JSON stringified
-  newData     String?  // JSON stringified
-  createdAt   DateTime @default(now())
-
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
+  id         String   @id @default(cuid())
+  action     String
+  entityType String
+  entityId   String
+  oldData    String?
+  newData    String?
+  createdAt  DateTime @default(now())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
 
   @@index([entityType, entityId])
   @@index([userId])
