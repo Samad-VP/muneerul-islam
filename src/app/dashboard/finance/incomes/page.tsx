@@ -94,8 +94,8 @@ export default function IncomesPage() {
       </div>
 
       <div className="bg-bg-card border border-border-color rounded-xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-text-secondary">
+        <div className="overflow-x-auto custom-scrollbar pb-2">
+          <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
             <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
               <tr>
                 <th className="px-6 py-4 font-semibold">Receipt No</th>

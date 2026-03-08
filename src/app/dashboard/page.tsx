@@ -205,15 +205,15 @@ export default function DashboardPage() {
                 href={`/dashboard/families/${family.id}`}
                 className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl bg-bg-primary border border-border-color hover:border-emerald-500/30 hover:bg-emerald-500/5 hover:shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all group shrink-0"
               >
-                <div>
-                  <p className="text-sm sm:text-base font-bold text-text-primary group-hover:text-emerald-400 transition-colors">{family.houseName}</p>
-                  <p className="text-xs sm:text-sm text-text-muted font-medium mt-0.5 flex items-center gap-1.5">
+                <div className="min-w-0 pr-3">
+                  <p className="text-sm sm:text-base font-bold text-text-primary group-hover:text-emerald-400 transition-colors truncate">{family.houseName}</p>
+                  <p className="text-xs sm:text-sm text-text-muted font-medium mt-0.5 flex flex-wrap items-center gap-1.5">
                     <span className="bg-bg-secondary px-1.5 py-0.5 rounded text-text-secondary border border-border-color">{family.familyNumber}</span>
-                    <span>·</span>
-                    <span>{family._count.members} members</span>
+                    <span className="hidden sm:inline">·</span>
+                    <span className="truncate">{family._count.members} members</span>
                   </p>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                   <span className="badge badge-emerald hidden sm:flex">{family._count.members} Members</span>
                   <PiArrowRight size={18} className="text-text-muted group-hover:text-emerald-400 transition-colors" />
                 </div>

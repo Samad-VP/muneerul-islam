@@ -95,8 +95,8 @@ export default function ExpensesPage() {
       </div>
 
       <div className="bg-bg-card border border-border-color rounded-xl overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-text-secondary">
+        <div className="overflow-x-auto custom-scrollbar pb-2">
+          <table className="w-full min-w-[900px] text-left text-sm text-text-secondary">
             <thead className="bg-bg-secondary/50 text-text-primary text-xs uppercase tracking-wider border-b border-border-color">
               <tr>
                 <th className="px-6 py-4 font-semibold">Voucher No</th>
@@ -138,16 +138,16 @@ export default function ExpensesPage() {
                     <td className="px-6 py-4 text-right">
                       {exp.status === 'PENDING_APPROVAL' && (
                         <div className="flex justify-end gap-2">
-                          <button onClick={() => handleStatusUpdate(exp.id, 'APPROVED')} className="text-xs px-3 py-1.5 bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 rounded-md font-medium transition-colors">
+                          <button onClick={() => handleStatusUpdate(exp.id, 'APPROVED')} className="btn-action">
                             Approve
                           </button>
-                          <button onClick={() => handleStatusUpdate(exp.id, 'REJECTED')} className="text-xs px-3 py-1.5 bg-red-500/10 text-red-500 hover:bg-red-500/20 rounded-md font-medium transition-colors">
+                          <button onClick={() => handleStatusUpdate(exp.id, 'REJECTED')} className="btn-action danger">
                             Reject
                           </button>
                         </div>
                       )}
                       {exp.status === 'APPROVED' && (
-                        <button onClick={() => handleStatusUpdate(exp.id, 'PAID')} className="text-xs px-3 py-1.5 bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 rounded-md font-medium transition-colors">
+                        <button onClick={() => handleStatusUpdate(exp.id, 'PAID')} className="btn-action">
                           Mark Paid
                         </button>
                       )}

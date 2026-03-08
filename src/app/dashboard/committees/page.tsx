@@ -152,13 +152,13 @@ export default function CommitteesPage() {
                     <span className="badge badge-blue text-[11px] ml-12">{committee.type}</span>
                   </div>
                   <div className="flex gap-1.5 ml-2 shrink-0">
-                    <button onClick={() => openEditCommittee(committee)} className="p-1.5 sm:p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors" title="Edit Committee">
+                    <button onClick={() => openEditCommittee(committee)} className="btn-action" title="Edit Committee">
                       <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 256 256" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM92.69,208H48V163.31l88-88L180.69,120ZM192,108.68,147.31,64l12.69-12.69L204.69,96Z"></path></svg>
                     </button>
-                    <button onClick={() => openAssign(committee)} className="p-1.5 sm:p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20 transition-colors" title="Assign Member">
+                    <button onClick={() => openAssign(committee)} className="btn-action" title="Assign Member">
                       <PiPlusBold size={16} />
                     </button>
-                    <button onClick={() => deleteCommittee(committee.id)} className="p-1.5 sm:p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors" title="Delete Committee">
+                    <button onClick={() => deleteCommittee(committee.id)} className="btn-action danger" title="Delete Committee">
                       <PiTrashDuotone size={16} />
                     </button>
                   </div>

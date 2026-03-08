@@ -154,8 +154,9 @@ export default function FamiliesPage() {
             </button>
           </div>
         ) : (
-          <div className="overflow-x-auto w-full">
-            <table className="data-table w-full min-w-[800px]">
+// Fix min-width to ensure horizontal scroll
+          <div className="overflow-x-auto w-full custom-scrollbar pb-2">
+            <table className="data-table w-full min-w-[900px]">
               <thead>
                 <tr>
                   <th>Family No.</th>
@@ -189,15 +190,15 @@ export default function FamiliesPage() {
                       <div className="flex gap-2">
                         <Link
                           href={`/dashboard/families/${family.id}`}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors text-xs font-semibold"
+                          className="btn-action"
                         >
                           <PiEyeDuotone size={16} /> View
                         </Link>
                         <button
                           onClick={() => deleteFamily(family.id)}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-colors text-xs font-semibold"
+                          className="btn-action danger"
                         >
-                          <PiTrashDuotone size={16} />
+                          <PiTrashDuotone size={16} /> Delete
                         </button>
                       </div>
                     </td>
@@ -260,7 +261,7 @@ export default function FamiliesPage() {
               </div>
 
               {/* Members */}
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 mt-6">
                 <h3 className="text-sm font-bold text-emerald-400 uppercase tracking-wider">
                   Family Members ({members.length})
                 </h3>
