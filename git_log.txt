@@ -1,0 +1,17 @@
+commit d9164227aa570a97faec04a01fd1f306ac863b94
+Author: Abdul Samad <samadtharqawi@gmail.com>
+Date:   Mon Mar 9 00:40:18 2026 +0530
+
+    chore: trigger production deployment
+
+commit ec056d1f45365247f6e0ec20d797321c42acb7e2
+Author: Abdul Samad <samadtharqawi@gmail.com>
+Date:   Mon Mar 9 00:38:03 2026 +0530
+
+    feat: polish dashboard UI/UX and enhance mobile responsiveness
+
+commit 4458866848efab737e3c9daf14246eedbfa7cebb
+Author: Abdul Samad <samadtharqawi@gmail.com>
+Date:   Mon Mar 9 00:21:05 2026 +0530
+
+    style: use global input-field on finance forms

@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
-import { PiFloppyDiskBold, PiSpinner, PiBuildingsDuotone } from "react-icons/pi"
+import { PiFloppyDiskBold, PiSpinner, PiBuildingsDuotone, PiLockKeyDuotone } from "react-icons/pi"
 
 export default function SettingsPage() {
   const [, setMahallu] = useState<any>(null)
@@ -8,8 +8,12 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState({
     name: "", arabicName: "", address: "", district: "", panchayat: "",
-    pincode: "", phone: "", email: "", president: "", secretary: "", imam: "", established: ""
+    pincode: "", phone: "", email: "", president: "", secretary: "", treasurer: "", imam: "", established: ""
   })
+
+  const [passwordForm, setPasswordForm] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" })
+  const [passwordSaving, setPasswordSaving] = useState(false)
+  const [passwordMessage, setPasswordMessage] = useState({ type: "", text: "" })
 
   useEffect(() => {
     fetch("/api/mahallu").then(res => res.json()).then(data => {
@@ -26,6 +30,7 @@ export default function SettingsPage() {
           email: data[0].email || "",
           president: data[0].president || "",
           secretary: data[0].secretary || "",
+          treasurer: data[0].treasurer || "",
           imam: data[0].imam || "",
           established: data[0].established || "",
         })
@@ -50,6 +55,44 @@ export default function SettingsPage() {
       alert("Error saving settings")
     } finally {
       setSaving(false)
+    }
+  }
+
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPasswordMessage({ type: "", text: "" })
+
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordMessage({ type: "error", text: "New passwords do not match" })
+      return
+    }
+
+    if (passwordForm.newPassword.length < 6) {
+      setPasswordMessage({ type: "error", text: "Password must be at least 6 characters" })
+      return
+    }
+
+    setPasswordSaving(true)
+    try {
+      const res = await fetch("/api/auth/password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword
+        })
+      })
+
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to change password")
+      
+      setPasswordMessage({ type: "success", text: "Password changed successfully!" })
+      setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" })
+    } catch (_err: any) {
+      console.error(_err)
+      setPasswordMessage({ type: "error", text: _err.message || "Error changing password" })
+    } finally {
+      setPasswordSaving(false)
     }
   }
 
@@ -128,6 +171,10 @@ export default function SettingsPage() {
               <input className="input-field w-full" value={form.secretary} onChange={e => setForm({...form, secretary: e.target.value})} />
             </div>
             <div>
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Treasurer</label>
+              <input className="input-field w-full" value={form.treasurer} onChange={e => setForm({...form, treasurer: e.target.value})} />
+            </div>
+            <div>
               <label className="block text-xs font-medium text-text-secondary mb-1.5">Imam</label>
               <input className="input-field w-full" value={form.imam} onChange={e => setForm({...form, imam: e.target.value})} />
             </div>
@@ -141,6 +188,48 @@ export default function SettingsPage() {
             <button type="submit" className="btn-primary w-full sm:w-auto justify-center px-8" disabled={saving}>
               {saving ? <PiSpinner size={18} className="animate-spin" /> : <PiFloppyDiskBold size={18} />}
               {saving ? "Saving..." : "Save Settings"}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div className="glass-card p-5 sm:p-8 w-full max-w-4xl mx-auto mt-6 sm:mt-8">
+        <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+            <PiLockKeyDuotone size={24} className="text-blue-400" />
+          </div>
+          <div>
+            <h2 className="text-lg sm:text-xl font-bold text-text-primary">Security Settings</h2>
+            <p className="text-xs sm:text-sm text-text-muted mt-0.5">Change your account password</p>
+          </div>
+        </div>
+
+        <form onSubmit={handlePasswordChange}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Current Password</label>
+              <input type="password" required className="input-field w-full max-w-md" value={passwordForm.currentPassword} onChange={e => setPasswordForm({...passwordForm, currentPassword: e.target.value})} />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">New Password</label>
+              <input type="password" required className="input-field w-full" value={passwordForm.newPassword} onChange={e => setPasswordForm({...passwordForm, newPassword: e.target.value})} />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-text-secondary mb-1.5">Confirm New Password</label>
+              <input type="password" required className="input-field w-full" value={passwordForm.confirmPassword} onChange={e => setPasswordForm({...passwordForm, confirmPassword: e.target.value})} />
+            </div>
+          </div>
+
+          {passwordMessage.text && (
+            <div className={`mt-4 p-3 rounded-lg text-sm ${passwordMessage.type === "error" ? "bg-red-500/10 text-red-500 border border-red-500/20" : "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"}`}>
+              {passwordMessage.text}
+            </div>
+          )}
+
+          <div className="flex justify-center sm:justify-start mt-6">
+            <button type="submit" className="btn-primary w-full sm:w-auto justify-center px-8" disabled={passwordSaving}>
+              {passwordSaving ? <PiSpinner size={18} className="animate-spin" /> : <PiLockKeyDuotone size={18} />}
+              {passwordSaving ? "Updating..." : "Change Password"}
             </button>
           </div>
         </form>

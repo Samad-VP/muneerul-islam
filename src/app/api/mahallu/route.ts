@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic"
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established } = body
+    const { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, treasurer, imam, established } = body
 
     if (!name) {
       return NextResponse.json({ error: "Mahallu name is required" }, { status: 400 })
@@ -16,11 +16,11 @@ export async function POST(request: Request) {
     if (mahallu) {
       mahallu = await prisma.mahallu.update({
         where: { id: mahallu.id },
-        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established }
+        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, treasurer, imam, established }
       })
     } else {
       mahallu = await prisma.mahallu.create({
-        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, imam, established }
+        data: { name, arabicName, address, district, panchayat, pincode, phone, email, president, secretary, treasurer, imam, established }
       })
     }
 

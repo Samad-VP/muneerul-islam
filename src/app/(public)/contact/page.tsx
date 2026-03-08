@@ -19,13 +19,13 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 w-full">
           {/* Contact Info */}
-          <div className="animate-slide-in stagger-1 w-full text-center sm:text-left">
+          <div className="animate-slide-in stagger-1 w-full text-center lg:text-left flex flex-col justify-center">
             <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 sm:mb-8">{t("contact.infoTitle")}</h2>
             <p className="text-text-secondary mb-10 sm:mb-12 text-base sm:text-lg">
               {t("contact.infoDesc")}
             </p>
 
-            <div className="space-y-6 sm:space-y-8 uppercase tracking-wide">
+            <div className="space-y-6 sm:space-y-8 uppercase tracking-wide inline-block text-left mx-auto lg:mx-0 w-full max-w-md lg:max-w-none">
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
                 <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 shrink-0">
                   <PiMapPinDuotone size={28} />
@@ -68,10 +68,10 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <div className="animate-fade-in stagger-2 w-full">
+          <div className="animate-fade-in stagger-2 w-full lg:max-w-xl lg:ml-auto">
             <div className="glass-card p-6 sm:p-10 w-full">
               <h3 className="text-xl sm:text-2xl font-extrabold mb-6 sm:mb-8 text-center sm:text-left">{t("contact.formTitle")}</h3>
-              <form className="space-y-5 sm:space-y-6">
+              <form className="space-y-5 sm:space-y-6 text-left">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-text-secondary uppercase tracking-wider">{t("contact.fullName")}</label>
@@ -90,7 +90,7 @@ export default function ContactPage() {
                   <label className="text-xs font-bold text-text-secondary uppercase tracking-wider">{t("contact.message")}</label>
                   <textarea className="input-field py-3.5 sm:py-4 min-h-[120px] sm:min-h-[150px] resize-none w-full" placeholder="Your message here..."></textarea>
                 </div>
-                <button type="button" className="btn-primary w-full justify-center py-3.5 sm:py-4 text-sm sm:text-base">
+                <button type="button" className="btn-primary w-full justify-center py-3.5 sm:py-4 text-sm sm:text-base mt-2">
                   {t("contact.send")} <PiPaperPlaneRightBold size={18} />
                 </button>
               </form>

@@ -35,6 +35,7 @@ model Mahallu {
   email         String?
   president     String?
   secretary     String?
+  treasurer     String?
   imam          String?
   established   String?
   logo          String?
