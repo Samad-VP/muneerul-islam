@@ -43,7 +43,7 @@ export default function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="text-lg sm:text-xl font-bold gradient-text leading-none tracking-tight">Muneerul Islam</span>
-            <span className="arabic-text text-[10px] sm:text-xs text-emerald-400/90 leading-tight">منیر الاسلام</span>
+            <span className="arabic-text text-xs sm:text-sm text-emerald-400/90 leading-tight">منیر الاسلام</span>
           </div>
         </Link>
 

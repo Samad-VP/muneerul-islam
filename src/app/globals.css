@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Amiri:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap");
 
 :root {
   /* Warm Eye-Care Light Mode Variables */
@@ -418,7 +418,7 @@ textarea {
 
 /* Arabic font */
 .arabic-text {
-  font-family: "Amiri", serif;
+  font-family: "Aref Ruqaa", serif;
   direction: rtl;
 }
 
