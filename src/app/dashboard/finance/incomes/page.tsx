@@ -201,17 +201,17 @@ export default function IncomesPage() {
               <form id="recordForm" onSubmit={handleRecordSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Fund <span className="text-red-500">*</span></label>
-                  <select required value={fundId} onChange={e => setFundId(e.target.value)} className="w-full input">
+                  <select required value={fundId} onChange={e => setFundId(e.target.value)} className="input-field w-full">
                     {funds.map(f => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Amount (₹) <span className="text-red-500">*</span></label>
-                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="w-full input" placeholder="e.g., 1000" />
+                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="e.g., 1000" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Notes / Description</label>
-                  <textarea value={notes} onChange={e => setNotes(e.target.value)} className="w-full input" rows={3} placeholder="Optional details..."></textarea>
+                  <textarea value={notes} onChange={e => setNotes(e.target.value)} className="input-field w-full" rows={3} placeholder="Optional details..."></textarea>
                 </div>
               </form>
             </div>

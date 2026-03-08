@@ -110,18 +110,18 @@ export default function FundsPage() {
               <form id="fundForm" onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Fund Name</label>
-                  <input type="text" required value={name} onChange={e => setName(e.target.value)} className="w-full input" placeholder="e.g., Ramadan Relief Fund" />
+                  <input type="text" required value={name} onChange={e => setName(e.target.value)} className="input-field w-full" placeholder="e.g., Ramadan Relief Fund" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Type</label>
-                  <select value={type} onChange={e => setType(e.target.value)} className="w-full input">
+                  <select value={type} onChange={e => setType(e.target.value)} className="input-field w-full">
                     <option value="special">Special</option>
                     <option value="general">General</option>
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Description</label>
-                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full input" rows={3}></textarea>
+                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3}></textarea>
                 </div>
               </form>
             </div>

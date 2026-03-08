@@ -231,21 +231,21 @@ export default function ExpensesPage() {
               <form id="requestForm" onSubmit={handleRequestSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Expense Title <span className="text-red-500">*</span></label>
-                  <input type="text" required value={title} onChange={e => setTitle(e.target.value)} className="w-full input" placeholder="e.g., Electricity Bill" />
+                  <input type="text" required value={title} onChange={e => setTitle(e.target.value)} className="input-field w-full" placeholder="e.g., Electricity Bill" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Target Fund <span className="text-red-500">*</span></label>
-                  <select required value={fundId} onChange={e => setFundId(e.target.value)} className="w-full input">
+                  <select required value={fundId} onChange={e => setFundId(e.target.value)} className="input-field w-full">
                     {funds.map(f => <option key={f.id} value={f.id}>{f.name} (Bal: ₹{f.balance})</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Amount (₹) <span className="text-red-500">*</span></label>
-                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="w-full input" placeholder="e.g., 500" />
+                  <input type="number" required min="1" value={amount} onChange={e => setAmount(e.target.value)} className="input-field w-full" placeholder="e.g., 500" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text-secondary mb-1">Description / Justification</label>
-                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="w-full input" rows={3}></textarea>
+                  <textarea value={description} onChange={e => setDescription(e.target.value)} className="input-field w-full" rows={3}></textarea>
                 </div>
               </form>
             </div>
