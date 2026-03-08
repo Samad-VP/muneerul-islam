@@ -8,6 +8,8 @@ import {
   PiMegaphone, PiChartBar, PiGear, PiSignOut, PiList, PiX, PiCaretRight,
   PiWallet, PiReceipt, PiBank, PiListChecks
 } from "react-icons/pi"
+import ThemeToggle from "@/components/ThemeToggle"
+import { useLanguage } from "@/context/LanguageContext"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: PiSquaresFour },
@@ -26,6 +28,7 @@ const navItems = [
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const { language, setLanguage } = useLanguage()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -126,7 +129,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-sm font-bold text-white shadow-md ring-2 ring-bg-secondary">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
+            {/* Language Toggle */}
+            <div className="flex items-center bg-bg-card border border-border-color rounded-lg p-1">
+              <button
+                onClick={() => setLanguage("en")}
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
+                  language === "en" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage("ml")}
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
+                  language === "ml" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                }`}
+              >
+                ML
+              </button>
+            </div>
+
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-sm font-bold text-white shadow-md ring-2 ring-bg-secondary ml-1 sm:ml-2">
               A
             </div>
           </div>
