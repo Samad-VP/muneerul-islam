@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react"
 
 export default function HomePage() {
   const { t } = useLanguage()
-  const { data: session, status } = useSession()
+  const { data: _session, status } = useSession()
 
   return (
     <div className="relative overflow-hidden w-full">

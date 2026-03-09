@@ -11,7 +11,7 @@ import ThemeToggle from "./ThemeToggle"
 export default function Navbar() {
   const pathname = usePathname()
   const { language, setLanguage, t } = useLanguage()
-  const { data: session, status } = useSession()
+  const { data: _session, status } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 

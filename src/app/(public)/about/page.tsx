@@ -37,7 +37,7 @@ export default function AboutPage() {
               {t("about.missionDesc")}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {t("about.missionList").map((item: string, i: number) => (
+              {t("about.missionList").map((item: string) => (
                 <div key={item} className="flex items-start gap-5 p-8 rounded-3xl glass-card border-none bg-emerald-500/5 group hover:bg-emerald-500/10 transition-colors duration-700">
                   <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-500 shrink-0 group-hover:scale-110 transition-transform">
                     <PiCheckCircleBold size={24} />

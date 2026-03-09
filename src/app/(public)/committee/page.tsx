@@ -33,7 +33,7 @@ export default async function CommitteePage() {
   })
 
   // Start with members from the committee record
-  let membersList = committee?.members || []
+  const membersList = committee?.members || []
 
   // Pre-sort roles to put President, Secretary, Treasurer at the top
   const rolePriority: Record<string, number> = {

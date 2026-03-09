@@ -1,7 +1,6 @@
 "use client"
 import { useEffect, useState } from "react"
 import { 
-  PiChartBarDuotone, 
   PiUsersDuotone, 
   PiHouseDuotone, 
   PiUserCheckDuotone, 
@@ -18,7 +17,7 @@ import {
 } from "react-icons/pi"
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-  PieChart, Pie, Cell, Legend, AreaChart, Area
+  PieChart, Pie, Cell, AreaChart, Area
 } from "recharts"
 
 export default function ReportsPage() {
@@ -286,7 +285,7 @@ export default function ReportsPage() {
             </div>
             
             <div className="grid grid-cols-2 gap-3">
-               {charts.bloodGroupDistribution.map((b: any, i: number) => (
+               {charts.bloodGroupDistribution.map((b: any, _i: number) => (
                  <div key={b.name} className="p-4 rounded-2xl bg-bg-secondary/30 border border-border-color/10 flex flex-col">
                     <span className="text-tiny font-black text-text-primary/30 uppercase tracking-widest mb-1">{b.name} Registry</span>
                     <span className="text-body-lg font-black text-text-primary">{b.value}</span>
