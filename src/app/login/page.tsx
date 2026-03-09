@@ -52,124 +52,123 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center islamic-pattern relative w-full pt-10 sm:pt-0" style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #0d1b2a 50%, #0a0f1a 100%)' }}>
-      <div className="absolute inset-0" style={{
-        background: 'radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)'
-      }} />
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-bg-primary dark:bg-[#020617] transition-colors duration-700">
+      {/* Immersive Background Elements */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/10 rounded-full animate-orb blur-[120px]" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[35%] h-[35%] bg-gold/10 rounded-full animate-orb blur-[100px] animation-delay-2000" />
+      <div className="absolute top-[20%] right-[10%] w-[20%] h-[20%] bg-blue-500/10 rounded-full animate-orb blur-[80px] animation-delay-4000" />
       
-      <div className="relative z-10 w-full max-w-md px-4 sm:px-6 animate-fade-in mx-auto">
-        {/* Logo and Title */}
-        <div className="text-center mb-8 sm:mb-10 w-full">
-          <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full mb-4 sm:mb-6 overflow-hidden bg-white shrink-0" style={{
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            boxShadow: '0 0 40px rgba(16, 185, 129, 0.15)'
-          }}>
-            <Image src="/logo.png" alt="Muneerul Islam Logo" width={80} height={80} className="w-full h-full object-contain" />
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold gradient-text mb-1 sm:mb-2">Muneerul Islam</h1>
-          <p className="arabic-text text-base sm:text-lg mb-1 sm:mb-2" style={{ color: 'var(--emerald-400)', opacity: 0.8 }}>منیر الاسلام</p>
-          <p style={{ color: 'var(--text-secondary)' }} className="text-xs sm:text-sm">Mahallu Committee Management System</p>
-        </div>
-
-        {/* Login Form */}
-        <div className="glass-card p-6 sm:p-8 w-full border border-border-color">
-          <h2 className="text-lg sm:text-xl font-extrabold mb-5 sm:mb-6" style={{ color: 'var(--text-primary)' }}>
-            {isRegister ? "Create Account" : "Welcome Back"}
-          </h2>
-
-          {error && (
-            <div style={{
-              padding: '12px 16px',
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
-              borderRadius: '10px',
-              color: '#f87171',
-              marginBottom: '20px'
-            }} className="text-xs sm:text-sm font-medium">
-              {error}
+      <div className="relative z-10 w-full max-w-[440px] px-6 py-12">
+        <div className="staggered-entrance flex flex-col items-center">
+          {/* Brand Identity */}
+          <div className="flex flex-col items-center mb-10">
+            <div className="w-20 h-20 rounded-3xl bg-white shadow-2xl p-4 mb-6 premium-hover transform -rotate-3 hover:rotate-0 transition-all duration-500 border border-border-color">
+              <Image src="/logo.png" alt="Muneerul Islam Logo" width={80} height={80} className="w-full h-full object-contain" />
             </div>
-          )}
+            <h1 className="text-h2 font-black gradient-text tracking-tightest mb-1">Muneerul Islam</h1>
+            <p className="arabic-text gradient-text text-body-lg mb-2 text-emerald-500/80">منیر الاسلام</p>
+            <div className="h-0.5 w-12 bg-gradient-to-r from-emerald-500 to-gold rounded-full mb-3" />
+            <p className="text-tiny sm:text-xs-label font-bold text-text-muted uppercase tracking-[0.3em] text-center">
+              Mahallu Committee Management
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="w-full">
-            {isRegister && (
-              <div style={{ marginBottom: '16px' }} className="w-full">
-                <label style={{ display: 'block', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }} className="text-[11px] sm:text-xs uppercase tracking-wider">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="input-field py-3.5 sm:py-4 w-full"
-                  placeholder="Enter your name"
-                  required
-                />
+          {/* Login Card */}
+          <div className="glass-card w-full p-10 border-white/20 dark:border-white/5 relative group overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            
+            <h2 className="text-h4 font-black text-text-primary mb-8 tracking-tight">
+              {isRegister ? "Create Account" : "Secure Sign In"}
+            </h2>
+
+            {error && (
+              <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs-label font-bold animate-shake">
+                {error}
               </div>
             )}
 
-            <div style={{ marginBottom: '16px' }} className="w-full">
-              <label style={{ display: 'block', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }} className="text-[11px] sm:text-xs uppercase tracking-wider">
-                Email Address
-              </label>
-              <div style={{ position: 'relative' }} className="w-full">
-                <PiEnvelopeDuotone size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="input-field py-3.5 sm:py-4 w-full"
-                  style={{ paddingLeft: '44px' }}
-                  placeholder="admin@muneerulislam.org"
-                  required
-                />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {isRegister && (
+                <div className="space-y-2">
+                  <label className="text-tiny font-black text-text-muted uppercase tracking-widest pl-1">Full Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="input-field bg-bg-secondary/30 focus:bg-white dark:focus:bg-bg-primary transition-all duration-300 rounded-2xl border-border-color/50"
+                    placeholder="Abdullah Ahmad"
+                    required
+                  />
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <label className="text-tiny font-black text-text-muted uppercase tracking-widest pl-1">Email Connection</label>
+                <div className="relative">
+                  <PiEnvelopeDuotone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-emerald-500" />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="input-field !pl-12 bg-bg-secondary/30 focus:bg-white dark:focus:bg-bg-primary transition-all duration-300 rounded-2xl border-border-color/50"
+                    placeholder="admin@muneerulislam.org"
+                    required
+                  />
+                </div>
               </div>
-            </div>
 
-            <div style={{ marginBottom: '24px' }} className="w-full">
-              <label style={{ display: 'block', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '6px' }} className="text-[11px] sm:text-xs uppercase tracking-wider">
-                Password
-              </label>
-              <div style={{ position: 'relative' }} className="w-full">
-                <PiLockKeyDuotone size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="input-field py-3.5 sm:py-4 w-full"
-                  style={{ paddingLeft: '44px', paddingRight: '44px' }}
-                  placeholder="Enter your password"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}
-                >
-                  {showPassword ? <PiEyeClosedDuotone size={18} /> : <PiEyeDuotone size={18} />}
-                </button>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center px-1">
+                  <label className="text-tiny font-black text-text-muted uppercase tracking-widest">Secret Key</label>
+                  {!isRegister && <button type="button" className="text-tiny font-black text-emerald-500 hover:text-emerald-600 transition-colors uppercase tracking-widest">Forgot?</button>}
+                </div>
+                <div className="relative">
+                  <PiLockKeyDuotone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-emerald-500" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="input-field !pl-12 !pr-12 bg-bg-secondary/30 focus:bg-white dark:focus:bg-bg-primary transition-all duration-300 rounded-2xl border-border-color/50"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-emerald-500 transition-colors"
+                  >
+                    {showPassword ? <PiEyeClosedDuotone size={18} /> : <PiEyeDuotone size={18} />}
+                  </button>
+                </div>
               </div>
+
+              <button type="submit" className="btn-primary w-full h-[56px] rounded-2xl text-small font-black tracking-tight mt-4 shadow-xl shadow-emerald-500/20 group relative overflow-hidden" disabled={loading}>
+                <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                <span className="flex items-center justify-center gap-3 relative z-10">
+                  {loading ? <PiSpinner size={22} className="animate-spin" /> : null}
+                  {loading ? "AUTHENTICATING..." : (isRegister ? "JOIN COMMUNITY" : "INITIALIZE SESSION")}
+                </span>
+              </button>
+            </form>
+
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => { setIsRegister(!isRegister); setError("") }}
+                className="text-xs-label font-black text-text-muted hover:text-emerald-500 transition-all duration-300 uppercase tracking-widest group"
+              >
+                {isRegister ? "Already member?" : "New to Mahallu?"} 
+                <span className="text-emerald-500 ml-1 group-hover:underline">{isRegister ? "SIGN IN" : "CREATE ACCOUNT"}</span>
+              </button>
             </div>
+          </div>
 
-            <button type="submit" className="btn-primary w-full justify-center py-3.5 sm:py-4 text-sm sm:text-base" disabled={loading}>
-              {loading ? <PiSpinner size={20} className="animate-spin" /> : null}
-              {loading ? "Please wait..." : (isRegister ? "Create Account" : "Sign In")}
-            </button>
-          </form>
-
-          <div style={{ textAlign: 'center', marginTop: '20px' }}>
-            <button
-              onClick={() => { setIsRegister(!isRegister); setError("") }}
-              style={{ background: 'none', border: 'none', color: 'var(--emerald-400)', cursor: 'pointer' }}
-              className="text-xs sm:text-sm font-semibold hover:text-emerald-300 transition-colors"
-            >
-              {isRegister ? "Already have an account? Sign In" : "Need an account? Register"}
-            </button>
+          <div className="mt-10 flex items-center gap-2 p-3 px-5 rounded-full bg-white/10 dark:bg-white/5 border border-white/20 backdrop-blur-md opacity-60">
+             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+             <p className="text-tiny font-black text-text-muted uppercase tracking-widest leading-none">
+               Demo: admin@muneerulislam.org / admin123
+             </p>
           </div>
         </div>
-
-        <p style={{ textAlign: 'center', marginTop: '24px', color: 'var(--text-muted)' }} className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase">
-          Default: admin@muneerulislam.org / admin123
-        </p>
       </div>
     </div>
   )

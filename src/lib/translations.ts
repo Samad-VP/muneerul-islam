@@ -76,6 +76,7 @@ export const translations = {
     },
     dashboard: {
       nav: {
+        home: "Public Home",
         dashboard: "Dashboard",
         families: "Families",
         members: "Members",
@@ -169,6 +170,7 @@ export const translations = {
     },
     dashboard: {
       nav: {
+        home: "ഹോം പേജ്",
         dashboard: "ഡാഷ്ബോർഡ്",
         families: "കുടുംബങ്ങൾ",
         members: "അംഗങ്ങൾ",

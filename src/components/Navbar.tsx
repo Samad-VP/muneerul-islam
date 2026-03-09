@@ -5,11 +5,13 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { PiList, PiX } from "react-icons/pi"
 import { useLanguage } from "@/context/LanguageContext"
+import { useSession } from "next-auth/react"
 import ThemeToggle from "./ThemeToggle"
 
 export default function Navbar() {
   const pathname = usePathname()
   const { language, setLanguage, t } = useLanguage()
+  const { data: session, status } = useSession()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -31,34 +33,40 @@ export default function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${
-        isOpen ? "bg-[#0a0f1a] border-b border-border-color py-3" : scrolled ? "bg-[#0a0f1a]/95 backdrop-blur-md border-b border-border-color py-3" : "bg-transparent py-4 sm:py-5"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full ${
+        isOpen 
+          ? "bg-bg-primary/95 backdrop-blur-xl border-b border-border-color py-4" 
+          : scrolled 
+            ? "bg-bg-primary/80 backdrop-blur-lg border-b border-border-color/50 py-3 shadow-premium" 
+            : "bg-transparent py-5 sm:py-6"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group shrink-0">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-emerald-500/30 flex items-center justify-center group-hover:scale-105 transition-transform shadow-inner overflow-hidden bg-white">
-            <Image src="/logo.png" alt="Muneerul Islam Logo" width={40} height={40} className="w-full h-full object-contain" />
+        <Link href="/" className="flex items-center gap-3 group shrink-0">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-emerald-400/30 flex items-center justify-center group-hover:scale-110 group-hover:border-emerald-400 transition-all duration-500 shadow-premium overflow-hidden bg-white p-1">
+            <Image src="/logo.png" alt="Muneerul Islam Logo" width={44} height={44} className="w-full h-full object-contain" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg sm:text-xl font-bold gradient-text leading-none tracking-tight">Muneerul Islam</span>
-            <span className="arabic-text text-xs sm:text-sm text-emerald-400/90 leading-tight">منیر الاسلام</span>
+            <span className="text-body-lg sm:text-h4 font-black gradient-text leading-none tracking-tighter">Muneerul Islam</span>
+            <span className="arabic-text gradient-text text-tiny sm:text-xs-label text-emerald-500/80 leading-tight font-bold">منیر الاسلام</span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-6">
-          <div className="flex items-center gap-6 xl:gap-8 mr-2">
+        <div className="hidden lg:flex items-center gap-8">
+          <div className="flex items-center gap-6 xl:gap-10">
             {navLinks.map((link) => (
               <Link 
                 key={link.href} 
                 href={link.href}
-                className={`text-sm font-semibold transition-colors hover:text-emerald-400 ${
-                  pathname === link.href ? "text-emerald-400" : "text-text-secondary"
+                className={`text-small font-bold tracking-wide transition-all duration-300 hover:text-emerald-500 relative group/link ${
+                  pathname === link.href ? "text-emerald-500" : "text-text-primary/70"
                 }`}
               >
                 {link.name}
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-emerald-500 transition-all duration-300 ${
+                  pathname === link.href ? "w-full" : "w-0 group-hover/link:w-2/3"
+                }`} />
               </Link>
             ))}
           </div>
@@ -71,7 +79,7 @@ export default function Navbar() {
             <div className="flex items-center bg-bg-card border border-border-color rounded-lg p-1">
               <button
                 onClick={() => setLanguage("en")}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+                className={`px-3 py-1.5 text-xs-label font-bold rounded-md transition-all ${
                   language === "en" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
                 }`}
               >
@@ -79,7 +87,7 @@ export default function Navbar() {
               </button>
               <button
                 onClick={() => setLanguage("ml")}
-                className={`px-3 py-1.5 text-xs font-bold rounded-md transition-all ${
+                className={`px-3 py-1.5 text-xs-label font-bold rounded-md transition-all ${
                   language === "ml" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
                 }`}
               >
@@ -88,23 +96,29 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link href="/login" className="btn-primary text-xs py-2 px-6 ml-2">
-            {t("nav.login")}
-          </Link>
+          {status === "authenticated" ? (
+            <Link href="/dashboard" className="btn-primary text-xs-label py-2 px-6 ml-2">
+              {t("dashboard.nav.dashboard")}
+            </Link>
+          ) : (
+            <Link href="/login" className="btn-primary text-xs-label py-2 px-6 ml-2">
+              {t("nav.login")}
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Controls */}
         <div className="flex items-center gap-3 lg:hidden">
           {/* Mobile Theme Toggle */}
-          <div className="hidden sm:block">
+          <div className="flex items-center">
             <ThemeToggle />
           </div>
-          
+
           {/* Mobile Language Toggle */}
-          <div className="flex items-center bg-bg-card border border-border-color rounded-lg p-0.5">
+          <div className="hidden sm:flex items-center bg-bg-card border border-border-color rounded-lg p-0.5">
             <button
               onClick={() => setLanguage("en")}
-              className={`px-2 py-1 text-[10px] font-bold rounded flex items-center justify-center transition-all ${
+              className={`px-2 py-1 text-tiny font-bold rounded flex items-center justify-center transition-all ${
                 language === "en" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted"
               }`}
             >
@@ -112,13 +126,14 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => setLanguage("ml")}
-              className={`px-2 py-1 text-[10px] font-bold rounded flex items-center justify-center transition-all ${
+              className={`px-2 py-1 text-tiny font-bold rounded flex items-center justify-center transition-all ${
                 language === "ml" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted"
               }`}
             >
               ML
             </button>
           </div>
+          
           <button 
             className="text-text-primary bg-bg-secondary p-1.5 rounded-md hover:text-emerald-400 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
@@ -130,13 +145,13 @@ export default function Navbar() {
 
       {/* Mobile Nav Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 h-[calc(100vh-70px)] bg-[#0a0f1a] z-[100] animate-fade-in origin-top overflow-y-auto isolate">
+        <div className="lg:hidden absolute top-full left-0 right-0 h-[calc(100vh-70px)] bg-bg-primary z-[100] animate-fade-in origin-top overflow-y-auto isolate">
           <div className="flex flex-col p-4 sm:p-6 gap-2">
             {navLinks.map((link) => (
               <Link 
                 key={link.href} 
                 href={link.href}
-                className={`text-base font-semibold px-4 py-3 rounded-lg transition-colors ${
+                className={`text-body font-semibold px-4 py-3 rounded-lg transition-colors ${
                   pathname === link.href ? "text-emerald-400 bg-emerald-500/10" : "text-text-secondary hover:bg-bg-secondary"
                 }`}
                 onClick={() => setIsOpen(false)}
@@ -145,22 +160,49 @@ export default function Navbar() {
               </Link>
             ))}
             
-            {/* Mobile Menu Theme Toggle */}
-            <div className="px-4 py-2 sm:hidden border-t border-border-color mt-2 pt-4">
-              <span className="text-xs font-semibold text-text-secondary uppercase tracking-wider mb-2 block">
-                {language === "ml" ? "തീം തിരഞ്ഞെടുക്കുക" : "Select Theme"}
+            {/* Mobile Menu Language Toggle */}
+            <div className="px-4 py-2 border-t border-border-color mt-2 pt-4">
+              <span className="text-xs-label font-semibold text-text-secondary uppercase tracking-wider mb-3 block">
+                {language === "ml" ? "ഭാഷ തിരഞ്ഞെടുക്കുക" : "Select Language"}
               </span>
-              <ThemeToggle />
+              <div className="flex items-center bg-bg-card border border-border-color rounded-lg p-1 gap-1 w-fit">
+                <button
+                  onClick={() => setLanguage("en")}
+                  className={`px-4 py-2 text-tiny font-bold rounded-md transition-all ${
+                    language === "en" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  onClick={() => setLanguage("ml")}
+                  className={`px-4 py-2 text-tiny font-bold rounded-md transition-all ${
+                    language === "ml" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                  }`}
+                >
+                  മലയാളം
+                </button>
+              </div>
             </div>
             
             <div className="px-4 mt-2">
-              <Link 
-                href="/login" 
-                className="btn-primary w-full justify-center py-3.5 text-sm"
-                onClick={() => setIsOpen(false)}
-              >
-                {t("nav.login")}
-              </Link>
+              {status === "authenticated" ? (
+                <Link 
+                  href="/dashboard" 
+                  className="btn-primary w-full justify-center py-3.5 text-small"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {t("dashboard.nav.dashboard")}
+                </Link>
+              ) : (
+                <Link 
+                  href="/login" 
+                  className="btn-primary w-full justify-center py-3.5 text-small"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {t("nav.login")}
+                </Link>
+              )}
             </div>
           </div>
         </div>

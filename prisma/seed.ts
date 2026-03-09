@@ -25,8 +25,8 @@ async function main() {
     data: {
       name: "Muneerul Islam Mahallu",
       arabicName: "محل منیر الاسلام",
-      address: "Kerala, India",
-      district: "Malappuram",
+      address: "Kolathur North Juma Masjid, CQ9M+JPV, Kozhikode, Kerala 673612, India",
+      district: "Kozhikode",
       panchayat: "",
       phone: "",
       email: "info@muneerulislam.org",

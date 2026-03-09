@@ -54,7 +54,7 @@ export const authOptions = {
   pages: {
     signIn: "/login",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "placeholder-secret-for-build",
   session: {
     strategy: "jwt" as const,
   },

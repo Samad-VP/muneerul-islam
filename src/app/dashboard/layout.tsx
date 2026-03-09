@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation"
 import {
   PiSquaresFour, PiUsers, PiHouse, PiUserCheck, PiCalendarBlank,
   PiMegaphone, PiChartBar, PiGear, PiSignOut, PiList, PiX, PiCaretRight,
-  PiWallet, PiReceipt, PiBank, PiListChecks
+  PiWallet, PiReceipt, PiBank, PiListChecks, PiGlobeDuotone
 } from "react-icons/pi"
 import ThemeToggle from "@/components/ThemeToggle"
 import { useLanguage } from "@/context/LanguageContext"
 
 const navItems = [
+  { href: "/", labelKey: "dashboard.nav.home", icon: PiGlobeDuotone },
   { href: "/dashboard", labelKey: "dashboard.nav.dashboard", icon: PiSquaresFour },
   { href: "/dashboard/families", labelKey: "dashboard.nav.families", icon: PiHouse },
   { href: "/dashboard/members", labelKey: "dashboard.nav.members", icon: PiUsers },
@@ -37,7 +38,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex min-h-screen bg-bg-secondary w-full">
+    <div className="flex min-h-screen bg-bg-secondary w-full relative overflow-hidden">
+      {/* Visual Accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gold/5 blur-[120px] -z-10 pointer-events-none" />
+
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -48,118 +53,123 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-50 w-64 bg-bg-card border-r border-border-color flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        className={`fixed top-4 left-4 bottom-4 z-50 w-72 bg-bg-card/90 backdrop-blur-xl border border-border-color/50 rounded-[2rem] flex flex-col transition-all duration-500 ease-in-out shadow-premium lg:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-[calc(100%+2rem)] lg:translate-x-0"
         }`}
       >
         {/* Logo */}
-        <div className="p-6 border-b border-border-color flex items-center justify-between lg:justify-start">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 border border-emerald-500/30 rounded-full flex items-center justify-center text-xl shadow-inner overflow-hidden bg-white shrink-0">
-              <Image src="/logo.png" alt="Muneerul Islam Logo" width={40} height={40} className="w-full h-full object-contain" />
+        <div className="p-8 border-b border-border-color/30 flex items-center justify-between gap-4">
+          <Link href="/" className="flex items-center gap-4 group min-w-0 flex-1">
+            <div className="w-12 h-12 border border-emerald-500/20 rounded-2xl flex items-center justify-center shadow-premium overflow-hidden bg-white shrink-0 group-hover:scale-105 transition-transform duration-500 p-1">
+              <Image src="/logo.png" alt="Muneerul Islam Logo" width={48} height={48} className="w-full h-full object-contain" />
             </div>
-            <div>
-              <h2 className="text-base font-bold text-text-primary leading-tight">Muneerul Islam</h2>
-              <p className="text-[11px] text-text-muted font-medium">{t("dashboard.nav.managementSystem")}</p>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-body-lg font-black text-text-primary leading-tight tracking-tight truncate">Muneerul Islam</h2>
+              <p className="text-tiny text-emerald-600 dark:text-emerald-400 font-black uppercase tracking-widest truncate">{t("dashboard.nav.managementSystem")}</p>
             </div>
-          </div>
+          </Link>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden text-text-muted hover:text-text-primary bg-bg-secondary p-1.5 rounded-md"
+            className="lg:hidden text-text-muted hover:text-text-primary bg-bg-secondary/50 p-2 rounded-xl transition-colors"
           >
-            <PiX size={20} />
+            <PiX size={22} />
           </button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 overflow-y-auto w-full">
-          <div className="mb-3 px-2">
-            <p className="text-[10px] font-bold text-text-muted uppercase tracking-wider">{t("dashboard.nav.mainMenu")}</p>
+        <nav className="flex-1 p-6 overflow-y-auto w-full custom-scrollbar">
+          <div className="mb-6 px-3">
+            <p className="text-tiny font-black text-text-primary/40 uppercase tracking-[0.2em]">{t("dashboard.nav.mainMenu")}</p>
           </div>
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
-            const Icon = item.icon
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg mb-1.5 text-sm transition-all duration-200 group ${
-                  isActive
-                    ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 font-semibold shadow-sm"
-                    : "text-text-secondary hover:text-emerald-400 hover:bg-emerald-500/5 font-medium border border-transparent"
-                }`}
-              >
-                <Icon size={20} className={isActive ? "text-emerald-400" : "text-text-muted group-hover:text-emerald-400 transition-colors"} />
-                <span className="flex-1">{t(item.labelKey)}</span>
-                {isActive && <PiCaretRight size={14} className="opacity-50" />}
-              </Link>
-            )
-          })}
+          <div className="space-y-1.5">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href))
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setSidebarOpen(false)}
+                  className={`flex items-center gap-4 px-4 py-3 rounded-2xl text-small transition-all duration-300 group ${
+                    isActive
+                      ? "text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 font-black shadow-sm"
+                      : "text-text-primary/60 hover:text-text-primary hover:bg-bg-secondary/80 font-bold border border-transparent"
+                  }`}
+                >
+                  <Icon size={22} className={isActive ? "text-emerald-500" : "text-text-primary/40 group-hover:text-emerald-500 transition-colors"} />
+                  <span className="flex-1">{t(item.labelKey)}</span>
+                  {isActive && <PiCaretRight size={14} className="opacity-50 group-hover:translate-x-1 transition-transform" />}
+                </Link>
+              )
+            })}
+          </div>
         </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-border-color">
+        <div className="p-6 border-t border-border-color/30">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-red-400 bg-red-400/5 border border-red-400/10 hover:bg-red-400/10 hover:text-red-300 transition-all font-medium"
+            className="flex items-center gap-4 w-full px-4 py-4 rounded-2xl text-small text-rose-500 bg-rose-500/5 border border-rose-500/10 hover:bg-rose-500 hover:text-white transition-all duration-300 font-black shadow-sm"
           >
-            <PiSignOut size={20} />
+            <PiSignOut size={22} />
             <span>{t("dashboard.nav.logout")}</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 min-h-screen lg:ml-64 w-full">
+      <main className="flex-1 flex flex-col min-w-0 min-h-screen lg:ml-80 w-full p-4 lg:p-6">
         {/* Top bar */}
-        <header className="sticky top-0 z-30 bg-bg-card/80 backdrop-blur-md border-b border-border-color px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <header className="sticky top-0 z-30 bg-bg-card/70 backdrop-blur-xl border border-border-color/50 rounded-[2rem] px-6 sm:px-10 py-5 flex items-center justify-between shadow-premium mb-6">
+          <div className="flex items-center gap-6">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden text-text-primary hover:text-emerald-400 transition-colors p-1"
+              className="lg:hidden text-text-primary hover:text-emerald-500 transition-colors p-2 bg-bg-secondary/50 rounded-xl"
             >
               <PiList size={26} />
             </button>
             <div className="hidden sm:block">
-              <p className="text-sm font-medium text-text-muted">
-                {new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
+              <p className="text-small font-black text-text-primary/60 uppercase tracking-widest bg-emerald-500/5 px-4 py-1.5 rounded-full border border-emerald-500/10">
+                {new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             {/* Theme Toggle */}
             <ThemeToggle />
 
             {/* Language Toggle */}
-            <div className="flex items-center bg-bg-card border border-border-color rounded-lg p-1">
+            <div className="flex items-center bg-bg-secondary/50 border border-border-color/30 rounded-xl p-1 gap-1">
               <button
                 onClick={() => setLanguage("en")}
-                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
-                  language === "en" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                className={`px-4 py-2 text-tiny font-black rounded-lg transition-all ${
+                  language === "en" ? "bg-emerald-600 text-white shadow-premium" : "text-text-primary/50 hover:text-text-primary"
                 }`}
               >
                 EN
               </button>
               <button
                 onClick={() => setLanguage("ml")}
-                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold rounded-md transition-all ${
-                  language === "ml" ? "bg-emerald-600 text-white shadow-sm" : "text-text-muted hover:text-text-primary"
+                className={`px-4 py-2 text-tiny font-black rounded-lg transition-all ${
+                  language === "ml" ? "bg-emerald-600 text-white shadow-premium" : "text-text-primary/50 hover:text-text-primary"
                 }`}
               >
                 ML
               </button>
             </div>
 
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-sm font-bold text-white shadow-md ring-2 ring-bg-secondary ml-1 sm:ml-2">
+            <Link 
+              href="/dashboard/settings"
+              className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-base font-black text-white shadow-premium ring-4 ring-emerald-500/10 ml-2 cursor-pointer hover:scale-110 transition-transform"
+            >
               A
-            </div>
+            </Link>
           </div>
         </header>
 
         {/* Page Content */}
-        <div className="p-4 sm:p-6 md:p-8 flex-1 overflow-x-hidden w-full max-w-[100vw]">
+        <div className="p-0 sm:p-4 flex-1 overflow-x-hidden w-full max-w-[100vw] animate-fade-in relative">
           {children}
         </div>
       </main>

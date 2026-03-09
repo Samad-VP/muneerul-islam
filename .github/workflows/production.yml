@@ -46,12 +46,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
-      - name: Build
-        run: npm run build
-        env:
-          DATABASE_URL: "postgresql://placeholder:placeholder@localhost:5432/placeholder"
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-          NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+      # Removed redundant npm run build step to avoid "Invalid URL" errors during GitHub Actions build.
+      # The actual build is performed by the `vercel build` step below.
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
